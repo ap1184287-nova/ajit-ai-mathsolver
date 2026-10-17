@@ -1,266 +1,281 @@
 
 
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080d1b">
-<title>AJIT AI Maths Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b18">
+<title>MIND Calculator</title>
 <style>
-:root{--bg:#080d1b;--panel:#101c31;--line:#29405f;--txt:#f2f6ff;--muted:#a9bad3;--cyan:#63f0e1;--blue:#62a8ff}
+:root {
+  --bg:#080b18;
+  --panel:rgba(19,25,48,.88);
+  --line:rgba(119,145,255,.19);
+  --blue:#58d8ff;
+  --purple:#9b7bff;
+  --text:#f2f5ff;
+  --muted:#8995b8;
+}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at 10% 0,#173c68,transparent 40%),radial-gradient(ellipse at 100% 20%,#10434b,transparent 32%),var(--bg);color:var(--txt);font-family:system-ui,sans-serif}
-header,main{max-width:1000px;margin:auto;padding:18px 14px}
-header{padding-top:26px}
-.brand{display:flex;align-items:center;gap:13px}
-.logo{width:55px;height:55px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(135deg,var(--cyan),var(--blue));color:#071326;font-weight:1000;font-size:25px;box-shadow:0 0 28px #62a8ff55}
-h1{font-size:clamp(23px,5vw,35px);margin:0}
-h1 span{color:var(--cyan)}
-.sub,.hint{color:var(--muted);font-size:13px;line-height:1.6}
-.nav{display:flex;gap:7px;position:sticky;top:0;background:#080d1bf5;padding:9px 0;z-index:5}
-.nav button{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;padding:12px 5px;background:#0d1729;color:var(--muted);font-weight:800;font-size:12px}
-.nav button.active{background:linear-gradient(120deg,#1d4777,#14545c);color:white;border-color:#63f0e1}
-.card{border:1px solid var(--line);border-radius:20px;padding:17px;background:linear-gradient(155deg,#111f35,#0b1526);margin-bottom:14px;box-shadow:0 15px 38px #0003}
-.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
-h2{font-size:18px;margin:0 0 8px}
-.field{margin:12px 0}
-label{display:block;font-size:12px;color:#c7d8ee;font-weight:700;margin-bottom:6px}
-select,input,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:#071426;color:var(--txt);font:inherit}
-textarea{min-height:100px;resize:vertical}
-button{cursor:pointer}
-.btn{width:100%;border:0;border-radius:13px;padding:13px;background:linear-gradient(105deg,var(--blue),var(--cyan));color:#071326;font-weight:900;font-size:15px}
-.pill{border:1px solid #2b4d6d;background:#102640;color:#c2f1ff;border-radius:99px;padding:8px 10px;font-size:12px;margin:3px}
-.output{margin-top:13px;padding:14px;border:1px solid #2a4e69;border-radius:14px;background:#061322;white-space:pre-wrap;line-height:1.7;overflow-wrap:anywhere}
-.hidden{display:none!important}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.entry{padding:13px 0;border-bottom:1px solid #263b55}
-.entry h3{font-size:14px;margin:0 0 5px}
-.entry p{font-size:13px;white-space:pre-wrap;line-height:1.55}
-.entry button{background:#122a46;color:#eaf6ff;border:1px solid var(--line);border-radius:9px;padding:8px}
-.footer{text-align:center;color:#8094b3;font-size:11px;padding:16px}
-.note{border-left:3px solid #ffd58a;padding:10px;background:#2b2417;color:#f6e5c5;border-radius:0 10px 10px 0;font-size:12px;line-height:1.5}
-/* Calculator */
-.calc{max-width:520px;margin:auto}
-.calc-display{background:#061322;border:1px solid #29405f;border-radius:16px;padding:15px;margin-bottom:12px;text-align:right;overflow:hidden}
-#calcExpr{color:var(--muted);min-height:25px;font-size:14px;overflow-wrap:anywhere}
-#calcValue{font-size:clamp(28px,8vw,42px);font-weight:800;overflow-wrap:anywhere}
-.calc-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
-.calc-grid button{min-width:0;padding:14px 2px;border:1px solid #29405f;border-radius:12px;background:#12233b;color:#f2f6ff;font-weight:750;font-size:15px}
-.calc-grid button.op{background:#183858;color:#8ee8ff}
-.calc-grid button.eq{background:linear-gradient(130deg,#62a8ff,#63f0e1);color:#071326;border:0}
-.calc-grid button.danger{background:#432332;color:#ffb7c7}
-.calc-grid button:active{transform:scale(.96)}
-.calc-mode{display:flex;gap:8px;margin-bottom:12px}
-.calc-mode button{flex:1;border:1px solid var(--line);border-radius:10px;background:#0d1729;color:var(--muted);padding:10px}
-.calc-mode button.active{background:#17475b;color:white}
-@media(max-width:700px){.grid{grid-template-columns:1fr}.card{padding:14px}.nav button{font-size:11px;padding:11px 2px}.calc-grid{gap:5px}.calc-grid button{padding:14px 0;font-size:14px}}
+body{
+  margin:0;min-height:100vh;padding:22px 12px;
+  font-family:Inter,system-ui,Arial,sans-serif;color:var(--text);
+  background:
+    radial-gradient(ellipse at 10% 0%,#182d57 0,transparent 40%),
+    radial-gradient(ellipse at 100% 70%,#291747 0,transparent 40%),
+    var(--bg);
+  display:flex;justify-content:center;align-items:center;
+}
+.app{width:100%;max-width:440px}
+.brand{text-align:center;margin-bottom:20px}
+.logo{
+  width:64px;height:64px;margin:0 auto 10px;border-radius:20px;
+  display:grid;place-items:center;font-size:30px;font-weight:900;
+  color:white;background:linear-gradient(135deg,#43d9ff,#7257ff);
+  box-shadow:0 0 35px #4b9dff55;transform:rotate(-5deg);
+}
+h1{margin:0;font-size:32px;letter-spacing:5px}
+.tagline{color:var(--muted);font-size:12px;margin-top:5px;letter-spacing:2px}
+.calculator{
+  border:1px solid var(--line);border-radius:28px;padding:17px;
+  background:var(--panel);backdrop-filter:blur(18px);
+  box-shadow:0 25px 80px #0007;
+}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.pill{
+  border:1px solid var(--line);background:#ffffff08;color:var(--blue);
+  padding:8px 13px;border-radius:12px;font-weight:700;cursor:pointer
+}
+.status{font-size:11px;color:var(--muted)}
+.screen{
+  min-height:115px;border-radius:19px;padding:17px;margin-bottom:15px;
+  background:linear-gradient(135deg,#070c1b,#111a32);
+  border:1px solid #ffffff0b;display:flex;flex-direction:column;
+  justify-content:flex-end;overflow:hidden
+}
+.expression{font-size:16px;color:var(--muted);min-height:25px;overflow-wrap:anywhere;text-align:right}
+.result{font-size:clamp(30px,8vw,42px);font-weight:700;text-align:right;overflow-wrap:anywhere;margin-top:8px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+button.key{
+  min-width:0;height:53px;border-radius:15px;border:1px solid #ffffff0b;
+  color:var(--text);background:#ffffff08;font-size:17px;font-weight:600;
+  cursor:pointer;transition:transform .12s,filter .12s;
+}
+button.key:active{transform:scale(.95);filter:brightness(1.35)}
+button.fn{color:var(--blue);background:#58d8ff0c}
+button.op{color:#c1aaff;background:#9b7bff12}
+button.danger{color:#ff9eae;background:#ff607c12}
+button.equal{
+  color:#07101d;background:linear-gradient(135deg,var(--blue),#a2f5ff);
+  box-shadow:0 5px 20px #58d8ff22
+}
+.section-title{font-size:11px;letter-spacing:2px;color:var(--muted);margin:18px 2px 10px}
+.trig{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.trig button{height:43px;font-size:14px}
+.footer{text-align:center;color:#667394;font-size:11px;margin-top:15px}
+@media(max-width:360px){
+  body{padding:12px 8px}
+  .calculator{padding:12px}
+  .grid{gap:6px}
+  button.key{height:48px;font-size:15px}
+  .trig{gap:6px}
+}
 </style>
 </head>
 <body>
-<header>
- <div class="brand"><div class="logo">A²</div><div><h1>AJIT <span>AI</span> Maths Studio</h1><p class="sub">Maths Solver • Question Bank • Calculator</p></div></div>
- <p class="sub">FREE • MOBILE FRIENDLY • GITHUB PAGES</p>
-</header>
+<main class="app">
+  <header class="brand">
+    <div class="logo">M</div>
+    <h1>MIND</h1>
+    <div class="tagline">SMART • FAST • PRECISE</div>
+  </header>
 
-<main>
- <nav class="nav">
-  <button id="nSolve" class="active" onclick="page('solve')">✦ Solver</button>
-  <button id="nBank" onclick="page('bank')">▤ Question Bank</button>
-  <button id="nCalc" onclick="page('calc')">⌗ Calculator</button>
- </nav>
-
- <section id="solvePage">
-  <div class="grid">
-   <div class="card">
-    <h2>अपना गणित का सवाल हल करें</h2>
-    <p class="hint">सवाल लिखें और हल निकालें।</p>
-    <div class="two">
-     <div class="field"><label>कक्षा</label><select id="grade"></select></div>
-     <div class="field"><label>अध्याय</label><select id="chapter"></select></div>
+  <section class="calculator">
+    <div class="topbar">
+      <span class="status">CALCULATOR ENGINE</span>
+      <button class="pill" id="mode" onclick="toggleMode()">DEG</button>
     </div>
-    <div class="field"><label>सवाल</label><textarea id="q" placeholder="जैसे: 2x + 5 = 15"></textarea></div>
-    <button class="pill" onclick="ex('2x + 5 = 15')">समीकरण</button>
-    <button class="pill" onclick="ex('200 का 15%')">प्रतिशत</button>
-    <button class="pill" onclick="ex('√144')">वर्गमूल</button>
-    <button class="pill" onclick="ex('12 और 18 का HCF')">HCF</button>
-    <p><button class="btn" onclick="solve()">हल निकालें →</button></p>
-    <div id="out" class="output hidden"></div>
-   </div>
-   <aside>
-    <div class="card"><h2>कैसे चलाएँ?</h2><p class="hint">1. कक्षा चुनें।<br>2. सवाल लिखें।<br>3. हल निकालें दबाएँ।<br>4. दूसरे सवालों के लिए Question Bank खोलें।</p></div>
-    <div class="card"><h2>जरूरी जानकारी</h2><p class="hint">यह Solver कुछ सामान्य गणितीय सवाल हल करता है। यह अभी बाहरी AI मॉडल से जुड़ा नहीं है और हर प्रकार का सवाल नहीं हल कर सकता।</p><div class="note">Question Bank में अभी नमूना प्रश्न हैं।</div></div>
-   </aside>
-  </div>
- </section>
 
- <section id="bankPage" class="hidden">
-  <div class="card">
-   <h2>BSEB Question Bank</h2><p class="hint">कक्षा और अध्याय के अनुसार नमूना सवाल खोजें।</p>
-   <div class="two">
-    <div class="field"><label>कक्षा</label><select id="bg"></select></div>
-    <div class="field"><label>खोजें</label><input id="search" placeholder="अध्याय या सवाल" oninput="render()"></div>
-   </div>
-   <div class="field"><label>अध्याय</label><select id="bc" onchange="render()"></select></div>
-   <div id="results"></div>
-  </div>
- </section>
+    <div class="screen">
+      <div class="expression" id="expression">Ready to calculate</div>
+      <div class="result" id="result">0</div>
+    </div>
 
- <section id="calcPage" class="hidden">
-  <div class="card calc">
-   <h2>AJIT Scientific Calculator</h2>
-   <p class="hint">Basic + Scientific • बिना इंटरनेट भी गणना कर सकता है।</p>
-   <div class="calc-mode">
-    <button id="basicMode" onclick="setMode('basic')">Basic</button>
-    <button id="sciMode" class="active" onclick="setMode('scientific')">Scientific</button>
-   </div>
-   <div class="calc-display">
-    <div id="calcExpr">तैयार</div>
-    <div id="calcValue">0</div>
-   </div>
-   <div class="calc-grid" id="calcGrid"></div>
-   <p class="hint">sin, cos और tan डिग्री (DEG) में काम करते हैं। log का अर्थ log₁₀ है।</p>
-  </div>
- </section>
+    <div class="grid">
+      <button class="key danger" onclick="clearAll()">AC</button>
+      <button class="key fn" onclick="backspace()">DEL</button>
+      <button class="key fn" onclick="put('(')">(</button>
+      <button class="key op" onclick="put('/')">÷</button>
+
+      <button class="key" onclick="put('7')">7</button>
+      <button class="key" onclick="put('8')">8</button>
+      <button class="key" onclick="put('9')">9</button>
+      <button class="key op" onclick="put('*')">×</button>
+
+      <button class="key" onclick="put('4')">4</button>
+      <button class="key" onclick="put('5')">5</button>
+      <button class="key" onclick="put('6')">6</button>
+      <button class="key op" onclick="put('-')">−</button>
+
+      <button class="key" onclick="put('1')">1</button>
+      <button class="key" onclick="put('2')">2</button>
+      <button class="key" onclick="put('3')">3</button>
+      <button class="key op" onclick="put('+')">+</button>
+
+      <button class="key fn" onclick="put('π')">π</button>
+      <button class="key" onclick="put('0')">0</button>
+      <button class="key" onclick="put('.')">.</button>
+      <button class="key equal" onclick="calculate()">=</button>
+    </div>
+
+    <div class="section-title">SCIENTIFIC FUNCTIONS</div>
+    <div class="trig">
+      <button class="key fn" onclick="put('sin(')">sin</button>
+      <button class="key fn" onclick="put('cos(')">cos</button>
+      <button class="key fn" onclick="put('tan(')">tan</button>
+      <button class="key fn" onclick="put('√(')">√</button>
+      <button class="key fn" onclick="put('sin⁻¹(')">sin⁻¹</button>
+      <button class="key fn" onclick="put('cos⁻¹(')">cos⁻¹</button>
+      <button class="key fn" onclick="put('tan⁻¹(')">tan⁻¹</button>
+      <button class="key fn" onclick="put('^2')">x²</button>
+      <button class="key fn" onclick="put('log(')">log</button>
+      <button class="key fn" onclick="put('ln(')">ln</button>
+      <button class="key fn" onclick="put('!')">n!</button>
+      <button class="key fn" onclick="put('%')">%</button>
+    </div>
+  </section>
+  <div class="footer">MIND CALCULATOR · Runs on your device</div>
 </main>
-<div class="footer">AJIT AI Maths Studio • Free educational project</div>
 
 <script>
-const C={
-6:["संख्या पद्धति","भिन्न और दशमलव","अनुपात","बीजगणित","ज्यामिति","क्षेत्रमिति"],
-7:["पूर्णांक","परिमेय संख्याएँ","सरल समीकरण","त्रिभुज","राशियों की तुलना","क्षेत्रफल"],
-8:["परिमेय संख्याएँ","रैखिक समीकरण","वर्ग और वर्गमूल","बीजगणितीय व्यंजक","क्षेत्रमिति"],
-9:["संख्या पद्धति","बहुपद","निर्देशांक ज्यामिति","रैखिक समीकरण","त्रिभुज","वृत्त","सांख्यिकी"],
-10:["वास्तविक संख्याएँ","बहुपद","रैखिक समीकरण युग्म","द्विघात समीकरण","समांतर श्रेढ़ियाँ","त्रिकोणमिति","सांख्यिकी","प्रायिकता"],
-11:["समुच्चय","फलन","त्रिकोणमिति","सम्मिश्र संख्याएँ","क्रमचय और संचय","अनुक्रम और श्रेणी","सीमा और अवकलज","प्रायिकता"],
-12:["संबंध और फलन","आव्यूह","सारणिक","अवकलज","समाकलन","सदिश बीजगणित","त्रिविमीय ज्यामिति","प्रायिकता"]
-};
-const B=[
-{g:6,c:"भिन्न और दशमलव",q:"1/2 + 1/4 का मान निकालिए।",a:"LCM(2,4)=4; 1/2=2/4; 2/4+1/4=3/4। उत्तर: 3/4"},
-{g:6,c:"क्षेत्रमिति",q:"लंबाई 8 cm और चौड़ाई 5 cm के आयत का क्षेत्रफल निकालिए।",a:"क्षेत्रफल = 8×5 = 40 cm²"},
-{g:7,c:"राशियों की तुलना",q:"200 का 15% निकालिए।",a:"200×15/100=30। उत्तर: 30"},
-{g:7,c:"सरल समीकरण",q:"x + 9 = 17 हल करें।",a:"x=17−9=8। उत्तर: x=8"},
-{g:8,c:"रैखिक समीकरण",q:"3x − 6 = 12 हल करें।",a:"3x=18; x=6। उत्तर: x=6"},
-{g:8,c:"वर्ग और वर्गमूल",q:"√144 निकालिए।",a:"12×12=144, इसलिए √144=12।"},
-{g:9,c:"बहुपद",q:"x² − 5x + 6 के शून्यक ज्ञात करें।",a:"(x−2)(x−3)=0, इसलिए शून्यक 2 और 3।"},
-{g:9,c:"रैखिक समीकरण",q:"x+y=7 और x−y=1 हल करें।",a:"जोड़ने पर 2x=8 ⇒ x=4; फिर y=3।"},
-{g:10,c:"द्विघात समीकरण",q:"x² − 5x + 6 = 0 हल करें।",a:"(x−2)(x−3)=0, इसलिए x=2 या x=3।"},
-{g:10,c:"त्रिकोणमिति",q:"सामने वाली भुजा 3 और कर्ण 5 है। sin θ निकालें।",a:"sin θ = 3/5।"},
-{g:11,c:"अनुक्रम और श्रेणी",q:"AP 2,5,8,11,... का 10वाँ पद निकालें।",a:"aₙ=a+(n−1)d=2+9×3=29।"},
-{g:11,c:"सीमा और अवकलज",q:"d/dx(x²) निकालें।",a:"d/dx(x²)=2x।"},
-{g:12,c:"आव्यूह",q:"2 पंक्ति और 2 स्तंभ वाले matrix का order क्या है?",a:"Order = 2×2।"},
-{g:12,c:"समाकलन",q:"∫x² dx निकालें।",a:"∫x² dx = x³/3 + C।"}
-];
-const $=id=>document.getElementById(id);
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function fill(id,all=false,g=6){$(id).innerHTML=(all?'<option value="*">सभी अध्याय</option>':'')+C[g].map(c=>`<option>${esc(c)}</option>`).join('');}
-function classes(id){$(id).innerHTML=[6,7,8,9,10,11,12].map(g=>`<option value="${g}">कक्षा ${g}</option>`).join('');}
-function page(p){['solve','bank','calc'].forEach(x=>$(x+'Page').classList.toggle('hidden',x!==p));['Solve','Bank','Calc'].forEach(x=>$('n'+x).classList.toggle('active',x.toLowerCase()===p));}
-function ex(s){$('q').value=s;}
-function render(){
- let g=+$('bg').value,ch=$('bc').value,s=$('search').value.toLowerCase();
- let a=B.filter(x=>x.g===g&&(ch==='*'||x.c===ch)&&(`${x.q} ${x.a} ${x.c}`).toLowerCase().includes(s));
- $('results').innerHTML=a.length?a.map(x=>`<div class="entry"><h3>कक्षा ${x.g} · ${esc(x.c)}</h3><p><b>सवाल:</b> ${esc(x.q)}</p><p><b>हल:</b> ${esc(x.a)}</p><button onclick="loadB(${B.indexOf(x)})">Solver में खोलें</button></div>`).join(''):'<p class="hint">इस चयन में अभी नमूना सवाल नहीं है।';
-}
-function loadB(i){let x=B[i];$('grade').value=x.g;fill('chapter',false,x.g);$('chapter').value=x.c;$('q').value=x.q;page('solve');solve();}
-function gcd(a,b){while(b)[a,b]=[b,a%b];return Math.abs(a);}
-function solveLinear(s){
- let z=s.split('=');if(z.length!==2)throw Error('एक ही = चिन्ह रखें।');
- function side(t){t=t.replace(/\s/g,'').replace(/-/g,'+-');if(t[0]==='+')t=t.slice(1);let a=0,b=0;
-  for(let v of t.split('+').filter(Boolean)){if(/[xX]/.test(v)){let n=v.replace(/[xX]/g,'').replace(/\*/g,'');a+=Number(n===''||n==='+'?'1':n==='-'?'-1':n);}else b+=Number(v);}
-  return[a,b];}
- let[a,b]=side(z[0]),[c,d]=side(z[1]),k=a-c,n=d-b;
- if(!k)return n?'कोई हल नहीं है।':'अनंत हल हैं।';
- return `चरण 1: ${s}\nचरण 2: x वाले पद एक तरफ करें।\nचरण 3: x = ${n} ÷ ${k}\nउत्तर: x = ${Number((n/k).toFixed(8))}`;
-}
-function solve(){
- let s=$('q').value.trim().replace(/[−–]/g,'-'),o=$('out');o.classList.remove('hidden');
- if(!s){o.textContent='पहले सवाल लिखें।';return;}
- try{
-  let m;
-  if(s.includes('=')&&/[xX]/.test(s)){o.textContent=solveLinear(s);return;}
-  if(m=s.match(/(\d+(?:\.\d+)?)\s*का\s*(\d+(?:\.\d+)?)\s*%/i)){o.textContent=`चरण 1: ${m[2]}% = ${m[2]}/100\nचरण 2: ${m[1]} × ${m[2]}/100\nउत्तर: ${+m[1]*+m[2]/100}`;return;}
-  if(m=s.match(/(\d+)\s*(?:और|and)\s*(\d+)\s*(?:का\s*)?HCF/i)){o.textContent=`${m[1]} और ${m[2]} का HCF = ${gcd(+m[1],+m[2])}`;return;}
-  let e=s.replace(/×/g,'*').replace(/÷/g,'/').replace(/,/g,'').replace(/√\s*(\d+(?:\.\d+)?)/g,'Math.sqrt($1)').replace(/(\d)\s*[xX]\b/g,'$1*x').replace(/(\d)\s*\(/g,'$1*(').replace(/\^/g,'**');
-  if(!/^[\d\s.+\-*/()Mathsqrt*]+$/i.test(e))throw Error('यह सवाल अभी समर्थित नहीं है।');
-  let v=Function('"use strict";return ('+e+')')();if(!Number.isFinite(v))throw Error('उत्तर नहीं मिला।');
-  o.textContent=`चरण 1: expression को पढ़ा।\nचरण 2: गणना की।\nउत्तर: ${Number(v.toFixed(8))}`;
- }catch(err){o.textContent='यह सवाल अभी Solver में समर्थित नहीं है।\n'+err.message+'\nQuestion Bank में नमूना सवाल देखें।';}
-}
+let expression = '';
+let degreeMode = true;
+const expEl = document.getElementById('expression');
+const resultEl = document.getElementById('result');
+const modeEl = document.getElementById('mode');
 
-/* Calculator: expression parser, no eval or Function */
-let calcExpr='',calcAns=0,calcMode='scientific',deg=true;
-const basicKeys=[
- ['AC','danger','clear'],['⌫','danger','back'],['%','op','percent'],['÷','op','/'],['×','op','*'],
- ['7','','7'],['8','','8'],['9','','9'],['−','op','-'],['+','op','+'],
- ['4','','4'],['5','','5'],['6','','6'],['(', 'op','('],[')','op',')'],
- ['1','','1'],['2','','2'],['3','','3'],['√','op','sqrt('],['x²','op','^2'],
- ['0','','0'],['.','','.'],['±','op','sign'],['π','op','pi'],['=','eq','equals']
-];
-const sciKeys=[
- ['sin','op','sin('],['cos','op','cos('],['tan','op','tan('],['log','op','log('],['ln','op','ln('],
- ['AC','danger','clear'],['⌫','danger','back'],['%','op','percent'],['÷','op','/'],['×','op','*'],
- ['7','','7'],['8','','8'],['9','','9'],['−','op','-'],['+','op','+'],
- ['4','','4'],['5','','5'],['6','','6'],['(','op','('],[')','op',')'],
- ['1','','1'],['2','','2'],['3','','3'],['√','op','sqrt('],['x²','op','^2'],
- ['0','','0'],['.','','.'],['±','op','sign'],['π','op','pi'],['=','eq','equals']
-];
-function setMode(m){calcMode=m;$('basicMode').classList.toggle('active',m==='basic');$('sciMode').classList.toggle('active',m==='scientific');drawKeys();}
-function drawKeys(){let keys=calcMode==='basic'?basicKeys:sciKeys;$('calcGrid').innerHTML=keys.map(([label,cl,val])=>`<button class="${cl}" onclick="calcPress('${val}')">${label}</button>`).join('');}
-function showCalc(expr,value){$('calcExpr').textContent=expr||' ';$('calcValue').textContent=value;}
-function calcPress(k){
- if(k==='clear'){calcExpr='';showCalc('','0');return;}
- if(k==='back'){calcExpr=calcExpr.slice(0,-1);showCalc(calcExpr,calcExpr||'0');return;}
- if(k==='equals'){try{let v=calculate(calcExpr);calcAns=v;showCalc(calcExpr+' =',fmt(v));calcExpr=String(v);}catch(e){showCalc('त्रुटि',e.message);}return;}
- if(k==='percent'){calcExpr+=' /100';showCalc(calcExpr,calcExpr);return;}
- if(k==='sign'){if(calcExpr)calcExpr='-('+calcExpr+')';else calcExpr='-';showCalc(calcExpr,calcExpr);return;}
- if(k==='pi')calcExpr+='pi';
- else if(k==='^2')calcExpr+='^2';
- else calcExpr+=k;
- showCalc(calcExpr,calcExpr||'0');
+function show(){
+  expEl.textContent = expression || 'Ready to calculate';
 }
-function fmt(n){if(!Number.isFinite(n))throw Error('गणना संभव नहीं');return String(Number(n.toPrecision(12)));}
-function calculate(src){
- if(!src.trim())return 0;
- let s=src.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/π/g,'pi');
- let tokens=s.match(/(?:\d+(?:\.\d*)?|\.\d+)|(?:[a-zA-Z]+)|(?:\*\*|[+\-*/^(),])/g);
- if(!tokens||tokens.join('')!==s.replace(/\s/g,''))throw Error('गलत expression');
- let i=0;
- function peek(){return tokens[i];}
- function eat(t){if(peek()===t){i++;return true;}return false;}
- function primary(){
-  if(eat('+'))return primary();
-  if(eat('-'))return -primary();
-  if(eat('(')){let v=expr();if(!eat(')'))throw Error(') लगाएँ');return v;}
-  let t=peek();if(!t)throw Error('अधूरा सवाल');i++;
-  if(/^\d/.test(t)||/^\./.test(t))return Number(t);
-  if(t==='pi')return Math.PI;
-  if(t==='e')return Math.E;
-  if(['sqrt','sin','cos','tan','log','ln','abs','floor','ceil'].includes(t)){
-   if(!eat('('))throw Error(t+' के बाद ( लगाएँ');
-   let v=expr();if(!eat(')'))throw Error(') लगाएँ');
-   if(t==='sqrt')return Math.sqrt(v);
-   if(t==='sin')return Math.sin(deg?v*Math.PI/180:v);
-   if(t==='cos')return Math.cos(deg?v*Math.PI/180:v);
-   if(t==='tan')return Math.tan(deg?v*Math.PI/180:v);
-   if(t==='log')return Math.log10(v);
-   if(t==='ln')return Math.log(v);
-   if(t==='abs')return Math.abs(v);
-   if(t==='floor')return Math.floor(v);
-   if(t==='ceil')return Math.ceil(v);
+function put(value){
+  if(expression === 'Error') expression = '';
+  expression += value;
+  show();
+}
+function clearAll(){
+  expression = '';
+  expEl.textContent = 'Ready to calculate';
+  resultEl.textContent = '0';
+}
+function backspace(){
+  expression = expression === 'Error' ? '' : expression.slice(0,-1);
+  show();
+}
+function toggleMode(){
+  degreeMode = !degreeMode;
+  modeEl.textContent = degreeMode ? 'DEG' : 'RAD';
+}
+function factorial(n){
+  if(!Number.isInteger(n) || n < 0 || n > 170) throw Error('Invalid factorial');
+  let r = 1;
+  for(let i=2;i<=n;i++) r *= i;
+  return r;
+}
+function calculate(){
+  if(!expression) return;
+  try{
+    let s = expression
+      .replace(/π/g,'pi')
+      .replace(/√\(/g,'sqrt(')
+      .replace(/sin⁻¹\(/g,'asin(')
+      .replace(/cos⁻¹\(/g,'acos(')
+      .replace(/tan⁻¹\(/g,'atan(')
+      .replace(/×/g,'*').replace(/÷/g,'/');
+
+    const tokens = s.match(/(?:\d+\.?\d*|\.\d+)|(?:pi|sqrt|asin|acos|atan|sin|cos|tan|log|ln|abs)|[()+\-*/^%!]/gi);
+    if(!tokens || tokens.join('') !== s.replace(/\s/g,'')) throw Error('Invalid input');
+    let pos = 0;
+
+    function peek(){return tokens[pos]}
+    function eat(t){if(tokens[pos]===t){pos++;return true}return false}
+    function primary(){
+      if(eat('+')) return primary();
+      if(eat('-')) return -primary();
+      if(eat('(')){
+        const v=add();
+        if(!eat(')')) throw Error('Missing )');
+        return v;
+      }
+      const t=peek();
+      if(!t) throw Error('Incomplete');
+      if(/^\d/.test(t)||/^\.\d/.test(t)){
+        pos++;return Number(t);
+      }
+      if(/^pi$/i.test(t)){pos++;return Math.PI}
+      if(/^[a-z]+$/i.test(t)){
+        pos++;
+        if(!eat('(')) throw Error('Use parentheses');
+        const x=add();
+        if(!eat(')')) throw Error('Missing )');
+        const angle=degreeMode?x*Math.PI/180:x;
+        switch(t.toLowerCase()){
+          case 'sqrt': return Math.sqrt(x);
+          case 'sin': return Math.sin(angle);
+          case 'cos': return Math.cos(angle);
+          case 'tan':
+            if(Math.abs(Math.cos(angle))<1e-12) throw Error('Undefined');
+            return Math.tan(angle);
+          case 'asin': return degreeMode?Math.asin(x)*180/Math.PI:Math.asin(x);
+          case 'acos': return degreeMode?Math.acos(x)*180/Math.PI:Math.acos(x);
+          case 'atan': return degreeMode?Math.atan(x)*180/Math.PI:Math.atan(x);
+          case 'log': return Math.log10(x);
+          case 'ln': return Math.log(x);
+          case 'abs': return Math.abs(x);
+          default: throw Error('Unknown function');
+        }
+      }
+      throw Error('Check expression');
+    }
+    function power(){
+      let v=primary();
+      if(eat('^')) v=Math.pow(v,power());
+      while(eat('!')) v=factorial(v);
+      return v;
+    }
+    function multiply(){
+      let v=power();
+      while(true){
+        if(eat('*')) v*=power();
+        else if(eat('/')) v/=power();
+        else if(eat('%')) v%=power();
+        else break;
+      }
+      return v;
+    }
+    function add(){
+      let v=multiply();
+      while(true){
+        if(eat('+')) v+=multiply();
+        else if(eat('-')) v-=multiply();
+        else break;
+      }
+      return v;
+    }
+    const answer=add();
+    if(pos!==tokens.length || !Number.isFinite(answer)) throw Error('Invalid result');
+    expEl.textContent=expression+' =';
+    resultEl.textContent=Number(answer.toPrecision(12)).toString();
+  }catch(e){
+    resultEl.textContent='Error';
   }
-  throw Error('अज्ञात चिन्ह: '+t);
- }
- function power(){let v=primary();if(eat('^'))v=Math.pow(v,power());return v;}
- function term(){let v=power();while(true){if(eat('*'))v*=power();else if(eat('/')){let d=power();if(d===0)throw Error('शून्य से भाग नहीं दे सकते');v/=d;}else break;}return v;}
- function expr(){let v=term();while(true){if(eat('+'))v+=term();else if(eat('-'))v-=term();else break;}return v;}
- let result=expr();if(i<tokens.length)throw Error('Expression जाँचें');if(!Number.isFinite(result))throw Error('उत्तर सीमित नहीं है');return result;
 }
-classes('grade');classes('bg');fill('chapter',false,6);fill('bc',true,6);
-$('grade').addEventListener('change',()=>fill('chapter',false,+$('grade').value));
-$('bg').addEventListener('change',()=>{fill('bc',true,+$('bg').value);render();});
-drawKeys();render();showCalc('','0');
+document.addEventListener('keydown',e=>{
+  if(/^[0-9.+\-*/()%]$/.test(e.key)){put(e.key)}
+  else if(e.key==='Enter'){calculate()}
+  else if(e.key==='Backspace'){backspace()}
+  else if(e.key==='Escape'){clearAll()}
+});
 </script>
 </body>
 </html>
-
