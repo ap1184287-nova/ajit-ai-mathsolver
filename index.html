@@ -1,167 +1,409 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#071326">
-<title>AJIT AI Math Solver</title>
+<meta name="theme-color" content="#080d1b">
+<title>AJIT AI Maths Studio</title>
+
 <style>
-:root{--bg:#071326;--panel:#0d1d35;--panel2:#122744;--text:#eef6ff;--muted:#a8bdd7;--blue:#56a8ff;--cyan:#56f0e4;--border:#294567;--good:#a7f3d0}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0%,#173b67 0,transparent 36%),linear-gradient(145deg,#050b17,#0a1930 65%,#071326);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
-header{padding:25px 16px 18px;text-align:center} .logo{width:66px;height:66px;margin:0 auto 12px;border-radius:20px;display:grid;place-items:center;font-size:29px;font-weight:900;color:#061426;background:linear-gradient(135deg,var(--cyan),var(--blue));box-shadow:0 0 30px #56a8ff55;transform:rotate(-4deg)}
-h1{margin:0;font-size:clamp(25px,6vw,36px);letter-spacing:.3px}h1 span{color:var(--cyan)}header p{color:var(--muted);margin:8px auto 0;max-width:600px;font-size:14px}
-main{max-width:900px;margin:auto;padding:0 14px 36px}.tabs{display:flex;gap:8px;margin:8px 0 14px}.tab{flex:1;border:1px solid var(--border);border-radius:13px;padding:12px 8px;color:var(--muted);background:#0b1b30;font-weight:750}.tab.active{background:linear-gradient(135deg,#1a4776,#12656c);border-color:#56d9e9;color:white}
-.panel{background:linear-gradient(160deg,#10243eeb,#09182bed);border:1px solid var(--border);border-radius:20px;padding:17px;box-shadow:0 12px 34px #0003;margin-bottom:14px}.panel h2{margin:0 0 13px;font-size:19px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{display:block;font-size:13px;color:var(--muted);margin:0 0 6px}select,input,textarea{width:100%;padding:12px 13px;border-radius:12px;border:1px solid var(--border);background:#07172b;color:var(--text);font:inherit;outline:none}textarea{resize:vertical;min-height:90px}select:focus,input:focus,textarea:focus{border-color:var(--cyan)}.field{margin-bottom:12px}.btn{width:100%;border:0;border-radius:13px;padding:13px 15px;background:linear-gradient(100deg,#56a8ff,#56f0e4);color:#061426;font-weight:900;font-size:15px}.btn.secondary{background:#142b48;border:1px solid var(--border);color:var(--text)}.small{font-size:12px;color:var(--muted);line-height:1.5}.result{white-space:pre-wrap;line-height:1.75;background:#061426;border:1px solid #244464;border-radius:14px;padding:14px;margin-top:13px;overflow-wrap:anywhere}.chips{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.chip{background:#102945;color:#bdeaff;border:1px solid #285073;border-radius:999px;padding:7px 10px;font-size:12px}.entry{padding:13px 0;border-bottom:1px solid #29415d}.entry:last-child{border-bottom:0}.entry h3{font-size:15px;margin:0 0 5px}.entry p{margin:4px 0;color:var(--muted);font-size:13px;white-space:pre-wrap}.entry button{margin-top:8px;padding:8px 10px;border-radius:9px;border:1px solid var(--border);background:#112b49;color:#e8f5ff}.hidden{display:none}.footer{text-align:center;color:var(--muted);font-size:12px;padding:8px 10px 20px}
-@media(max-width:520px){.row{grid-template-columns:1fr}.panel{padding:14px}.tabs{position:sticky;top:0;z-index:5;background:#071326;padding:5px 0}.tab{font-size:13px}}
+:root {
+  --bg:#080d1b;
+  --panel:#101c31;
+  --line:#29405f;
+  --txt:#f2f6ff;
+  --muted:#a9bad3;
+  --cyan:#63f0e1;
+  --blue:#62a8ff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:
+    radial-gradient(ellipse at 10% 0,#173c68,transparent 40%),
+    radial-gradient(ellipse at 100% 20%,#10434b,transparent 32%),
+    var(--bg);
+  color:var(--txt);
+  font-family:system-ui,sans-serif;
+}
+header,main { max-width:950px; margin:auto; padding:20px 14px; }
+header { padding-top:28px; }
+.brand { display:flex; align-items:center; gap:13px; }
+.logo {
+  width:55px;height:55px;border-radius:17px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  color:#071326;font-weight:1000;font-size:25px;
+  box-shadow:0 0 28px #62a8ff55;
+}
+h1 { font-size:clamp(24px,5vw,35px); margin:0; }
+h1 span { color:var(--cyan); }
+.sub,.hint { color:var(--muted);font-size:13px;line-height:1.55; }
+.nav {
+  display:flex;gap:8px;position:sticky;top:0;
+  background:#080d1bf2;padding:8px 0;z-index:2;
+}
+.nav button {
+  flex:1;border:1px solid var(--line);border-radius:12px;
+  padding:12px 7px;background:#0d1729;color:var(--muted);
+  font-weight:800;
+}
+.nav button.active {
+  background:linear-gradient(120deg,#1d4777,#14545c);
+  color:white;
+}
+.card {
+  border:1px solid var(--line);border-radius:20px;padding:17px;
+  background:linear-gradient(155deg,#111f35,#0b1526);
+  margin-bottom:14px;box-shadow:0 15px 38px #0003;
+}
+.grid { display:grid;grid-template-columns:1.3fr .7fr;gap:14px; }
+h2 { font-size:18px;margin:0 0 8px; }
+.two { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+.field { margin:12px 0; }
+.field label {
+  display:block;font-size:12px;color:#c7d8ee;
+  font-weight:700;margin-bottom:6px;
+}
+select,input,textarea {
+  width:100%;padding:12px;border:1px solid var(--line);
+  border-radius:12px;background:#071426;color:var(--txt);font:inherit;
+}
+textarea { min-height:105px;resize:vertical; }
+.btn {
+  width:100%;border:0;border-radius:13px;padding:13px;
+  background:linear-gradient(105deg,var(--blue),var(--cyan));
+  color:#071326;font-weight:900;font-size:15px;
+}
+.pill {
+  border:1px solid #2b4d6d;background:#102640;color:#c2f1ff;
+  border-radius:99px;padding:7px 10px;font-size:12px;margin:3px;
+}
+.output {
+  margin-top:13px;padding:14px;border:1px solid #2a4e69;
+  border-radius:14px;background:#061322;white-space:pre-wrap;
+  line-height:1.7;overflow-wrap:anywhere;
+}
+.hidden { display:none!important; }
+.entry { padding:13px 0;border-bottom:1px solid #263b55; }
+.entry h3 { font-size:14px;margin:0 0 5px; }
+.entry p { font-size:13px;white-space:pre-wrap;line-height:1.55; }
+.entry button {
+  background:#122a46;color:#eaf6ff;
+  border:1px solid var(--line);border-radius:9px;padding:8px;
+}
+.note {
+  border-left:3px solid #ffd58a;padding:10px;background:#2b2417;
+  color:#f6e5c5;border-radius:0 10px 10px 0;font-size:12px;line-height:1.5;
+}
+.footer { text-align:center;color:#8094b3;font-size:11px;padding:16px; }
+@media(max-width:700px) {
+  .grid { grid-template-columns:1fr; }
+  .card { padding:14px; }
+}
+@media(max-width:390px) {
+  .two { grid-template-columns:1fr; }
+}
 </style>
 </head>
+
 <body>
 <header>
-  <div class="logo">A²</div>
-  <h1>AJIT <span>AI</span> Math Solver</h1>
-  <p>Bihar Board • कक्षा 6–12 • सवाल हल करें और अध्यायवार उदाहरण खोजें</p>
+  <div class="brand">
+    <div class="logo">A²</div>
+    <div>
+      <h1>AJIT <span>AI</span> Maths Studio</h1>
+      <p class="sub">Bihar Board • Class 6–12 • Step-by-step learning</p>
+    </div>
+  </div>
+  <p class="sub">FREE • MOBILE FIRST • BETA</p>
 </header>
+
 <main>
-  <div class="tabs">
-    <button class="tab active" id="tabSolve" onclick="showTab('solve')">🧠 Smart Solver</button>
-    <button class="tab" id="tabBank" onclick="showTab('bank')">📚 Question Bank</button>
+  <div class="nav">
+    <button id="n1" class="active" onclick="page('solve')">✦ Smart Solver</button>
+    <button id="n2" onclick="page('bank')">▤ Question Bank</button>
   </div>
 
-  <section id="solvePanel" class="panel">
-    <h2>अपना सवाल लिखें</h2>
-    <div class="row">
-      <div class="field"><label for="grade">कक्षा</label><select id="grade" onchange="refreshChapters()"></select></div>
-      <div class="field"><label for="chapter">अध्याय / विषय</label><select id="chapter"></select></div>
+  <section id="solvePage">
+    <div class="grid">
+      <div class="card">
+        <h2>अपना सवाल हल करें</h2>
+        <p class="hint">कक्षा और विषय चुनें, फिर सवाल लिखें।</p>
+
+        <div class="two">
+          <div class="field">
+            <label>कक्षा</label>
+            <select id="grade"></select>
+          </div>
+          <div class="field">
+            <label>अध्याय</label>
+            <select id="chapter"></select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>सवाल</label>
+          <textarea id="q" placeholder="उदाहरण: 2x + 5 = 15"></textarea>
+        </div>
+
+        <button class="pill" onclick="ex('2x + 5 = 15')">2x + 5 = 15</button>
+        <button class="pill" onclick="ex('200 का 15%')">200 का 15%</button>
+        <button class="pill" onclick="ex('√144')">√144</button>
+        <button class="pill" onclick="ex('12 और 18 का HCF')">HCF</button>
+
+        <p><button class="btn" onclick="solve()">हल निकालें →</button></p>
+        <div id="out" class="output hidden"></div>
+      </div>
+
+      <aside>
+        <div class="card">
+          <h2>कैसे चलाएँ</h2>
+          <p class="hint">
+            1. कक्षा चुनें।<br>
+            2. सवाल लिखें।<br>
+            3. हल निकालें दबाएँ।<br>
+            4. Question Bank में अध्यायवार नमूने खोजें।
+          </p>
+        </div>
+        <div class="card">
+          <h2>ईमानदार जानकारी</h2>
+          <p class="hint">
+            यह ₹0 में चलने वाला शुरुआती Solver है।
+            यह अभी हर नए सवाल, फोटो, प्रमेय या कठिन calculus
+            को हल नहीं करता। Question Bank में सत्यापित किताबों
+            के सवाल धीरे-धीरे जोड़ने होंगे।
+          </p>
+          <div class="note">
+            जो सवाल समर्थित नहीं होगा, ऐप साफ बताएगा—
+            गलत उत्तर गढ़कर नहीं देगा।
+          </div>
+        </div>
+      </aside>
     </div>
-    <div class="field"><label for="question">गणित का सवाल</label><textarea id="question" placeholder="उदाहरण: 2x + 5 = 15&#10;या: 200 का 15%&#10;या: 12 और 18 का HCF"></textarea></div>
-    <div class="chips">
-      <button class="chip" onclick="putQ('2x + 5 = 15')">2x + 5 = 15</button>
-      <button class="chip" onclick="putQ('200 का 15%')">200 का 15%</button>
-      <button class="chip" onclick="putQ('√144')">√144</button>
-      <button class="chip" onclick="putQ('12 और 18 का HCF')">HCF</button>
-    </div>
-    <button class="btn" onclick="solveQuestion()">सवाल का हल निकालें</button>
-    <div id="solveResult" class="result hidden" aria-live="polite"></div>
-    <p class="small">नोट: यह मुफ्त, ब्राउज़र में चलने वाला नियम-आधारित Solver है। यह हर उन्नत सवाल या फोटो को अभी नहीं समझता।</p>
   </section>
 
-  <section id="bankPanel" class="panel hidden">
-    <h2>अध्यायवार Question Bank</h2>
-    <div class="row">
-      <div class="field"><label for="bankGrade">कक्षा</label><select id="bankGrade" onchange="renderBank()"></select></div>
-      <div class="field"><label for="searchBank">सवाल खोजें</label><input id="searchBank" placeholder="जैसे प्रतिशत, समीकरण..." oninput="renderBank()"></div>
-    </div>
-    <div class="field"><label for="bankChapter">अध्याय</label><select id="bankChapter" onchange="renderBank()"></select></div>
-    <div id="bankList"></div>
-    <p class="small">Question Bank में अभी नमूना सवाल हैं। इसे नीचे दिए गए BANK_DATA में और सवाल जोड़कर बढ़ाया जा सकता है।</p>
-  </section>
+  <section id="bankPage" class="hidden">
+    <div class="card">
+      <h2>BSEB Question Bank</h2>
+      <p class="hint">कक्षा, अध्याय या शब्द से नमूना सवाल खोजें।</p>
 
-  <section class="panel">
-    <h2>कैसे इस्तेमाल करें?</h2>
-    <p class="small">1. कक्षा चुनें। 2. सवाल लिखें। 3. “सवाल का हल निकालें” दबाएँ। Question Bank में कक्षा और अध्याय चुनकर उपलब्ध उदाहरण देखें।</p>
+      <div class="two">
+        <div class="field">
+          <label>कक्षा</label>
+          <select id="bg"></select>
+        </div>
+        <div class="field">
+          <label>खोजें</label>
+          <input id="search" placeholder="जैसे बहुपद, प्रतिशत" oninput="render()">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>अध्याय</label>
+        <select id="bc" onchange="render()"></select>
+      </div>
+      <div id="results"></div>
+    </div>
   </section>
 </main>
-<div class="footer">AJIT AI Math Solver • Free educational project • GitHub Pages</div>
+
+<div class="footer">AJIT AI Maths Studio • Bihar Board learning project</div>
 
 <script>
-const CHAPTERS = {
-6:["संख्या पद्धति","पूर्णांक","भिन्न और दशमलव","अनुपात और समानुपात","बीजगणित","ज्यामिति","क्षेत्रमिति","आँकड़ों का प्रबंधन"],
-7:["पूर्णांक","भिन्न और दशमलव","परिमेय संख्याएँ","सरल समीकरण","रेखाएँ और कोण","त्रिभुज","राशियों की तुलना","परिमाप और क्षेत्रफल","बीजगणितीय व्यंजक"],
-8:["परिमेय संख्याएँ","एक चर वाले रैखिक समीकरण","चतुर्भुज","वर्ग और वर्गमूल","घन और घनमूल","राशियों की तुलना","बीजगणितीय व्यंजक","क्षेत्रमिति","आँकड़ों का प्रबंधन"],
-9:["संख्या पद्धति","बहुपद","निर्देशांक ज्यामिति","दो चरों वाले रैखिक समीकरण","यूक्लिड की ज्यामिति","रेखाएँ और कोण","त्रिभुज","चतुर्भुज","वृत्त","हीरोन का सूत्र","पृष्ठीय क्षेत्रफल और आयतन","सांख्यिकी"],
-10:["वास्तविक संख्याएँ","बहुपद","दो चर वाले रैखिक समीकरण युग्म","द्विघात समीकरण","समांतर श्रेढ़ियाँ","त्रिभुज","निर्देशांक ज्यामिति","त्रिकोणमिति","त्रिकोणमिति के अनुप्रयोग","वृत्त","रचनाएँ","वृत्तों से संबंधित क्षेत्रफल","पृष्ठीय क्षेत्रफल और आयतन","सांख्यिकी","प्रायिकता"],
-11:["समुच्चय","संबंध और फलन","त्रिकोणमितीय फलन","सम्मिश्र संख्याएँ","रैखिक असमिकाएँ","क्रमचय और संचय","द्विपद प्रमेय","अनुक्रम और श्रेणी","सरल रेखाएँ","शंकु परिच्छेद","त्रिविमीय ज्यामिति","सीमा और अवकलज","सांख्यिकी","प्रायिकता"],
-12:["संबंध और फलन","प्रतिलोम त्रिकोणमितीय फलन","आव्यूह","सारणिक","सांतत्य और अवकलनीयता","अवकलज के अनुप्रयोग","समाकलन","समाकलनों के अनुप्रयोग","अवकल समीकरण","सदिश बीजगणित","त्रिविमीय ज्यामिति","रैखिक प्रोग्रामन","प्रायिकता"]
+const C = {
+  6:["संख्या पद्धति","भिन्न और दशमलव","अनुपात","बीजगणित","ज्यामिति","क्षेत्रमिति"],
+  7:["पूर्णांक","परिमेय संख्याएँ","सरल समीकरण","त्रिभुज","राशियों की तुलना","क्षेत्रफल"],
+  8:["परिमेय संख्याएँ","रैखिक समीकरण","वर्ग और वर्गमूल","बीजगणितीय व्यंजक","क्षेत्रमिति"],
+  9:["संख्या पद्धति","बहुपद","निर्देशांक ज्यामिति","रैखिक समीकरण","त्रिभुज","वृत्त","सांख्यिकी"],
+  10:["वास्तविक संख्याएँ","बहुपद","रैखिक समीकरण युग्म","द्विघात समीकरण","समांतर श्रेढ़ियाँ","त्रिकोणमिति","सांख्यिकी","प्रायिकता"],
+  11:["समुच्चय","फलन","त्रिकोणमिति","सम्मिश्र संख्याएँ","क्रमचय और संचय","अनुक्रम और श्रेणी","सीमा और अवकलज","प्रायिकता"],
+  12:["संबंध और फलन","आव्यूह","सारणिक","अवकलज","समाकलन","सदिश बीजगणित","त्रिविमीय ज्यामिति","प्रायिकता"]
 };
 
-/* नमूना डेटा: अपने सत्यापित प्रश्न/हल इसी ढाँचे में जोड़ें। */
-const BANK_DATA = [
-{grade:6,chapter:"भिन्न और दशमलव",q:"1/2 + 1/4 का मान निकालिए।",a:"LCM(2,4)=4\n1/2 = 2/4\n2/4 + 1/4 = 3/4\nउत्तर: 3/4"},
-{grade:6,chapter:"क्षेत्रमिति",q:"लंबाई 8 cm और चौड़ाई 5 cm वाले आयत का क्षेत्रफल निकालिए।",a:"क्षेत्रफल = लंबाई × चौड़ाई\n= 8 × 5 = 40 cm²\nउत्तर: 40 cm²"},
-{grade:7,chapter:"राशियों की तुलना",q:"200 का 15% निकालिए।",a:"15% = 15/100\n200 × 15/100 = 30\nउत्तर: 30"},
-{grade:7,chapter:"सरल समीकरण",q:"x + 9 = 17 हल कीजिए।",a:"x + 9 = 17\nदोनों तरफ से 9 घटाएँ:\nx = 17 − 9 = 8\nउत्तर: x = 8"},
-{grade:8,chapter:"एक चर वाले रैखिक समीकरण",q:"3x − 6 = 12 हल कीजिए।",a:"3x − 6 = 12\nदोनों तरफ 6 जोड़ें: 3x = 18\n3 से भाग दें: x = 6\nउत्तर: x = 6"},
-{grade:8,chapter:"वर्ग और वर्गमूल",q:"√144 निकालिए।",a:"12 × 12 = 144\nइसलिए √144 = 12\nउत्तर: 12"},
-{grade:9,chapter:"बहुपद",q:"p(x)=x²−5x+6 के शून्यक ज्ञात कीजिए।",a:"x² − 5x + 6 = (x − 2)(x − 3)\nअतः x = 2 या x = 3\nउत्तर: 2 और 3"},
-{grade:9,chapter:"दो चरों वाले रैखिक समीकरण",q:"x + y = 7 और x − y = 1 हल कीजिए।",a:"दोनों समीकरण जोड़ें: 2x = 8, इसलिए x = 4\nx + y = 7 में रखें: 4 + y = 7\nइसलिए y = 3\nउत्तर: x=4, y=3"},
-{grade:10,chapter:"द्विघात समीकरण",q:"x² − 5x + 6 = 0 हल कीजिए।",a:"x² − 5x + 6 = 0\n(x − 2)(x − 3)=0\nअतः x=2 या x=3"},
-{grade:10,chapter:"त्रिकोणमिति",q:"यदि समकोण त्रिभुज में सामने वाली भुजा 3 और कर्ण 5 है, तो sin θ क्या है?",a:"sin θ = सामने वाली भुजा / कर्ण\n= 3/5\nउत्तर: 3/5"},
-{grade:11,chapter:"अनुक्रम और श्रेणी",q:"AP: 2, 5, 8, 11,... का 10वाँ पद निकालिए।",a:"a=2, d=3, n=10\n aₙ = a + (n−1)d\n= 2 + 9×3 = 29\nउत्तर: 29"},
-{grade:11,chapter:"सीमा और अवकलज",q:"d/dx (x²) निकालिए।",a:"घात नियम: d/dx(xⁿ)=n xⁿ⁻¹\nइसलिए d/dx(x²)=2x"},
-{grade:12,chapter:"आव्यूह",q:"A=[[1,2],[3,4]] का order क्या है?",a:"आव्यूह में 2 पंक्तियाँ और 2 स्तंभ हैं।\nOrder = 2 × 2"},
-{grade:12,chapter:"अवकलज के अनुप्रयोग",q:"y=x³ का अवकलज निकालिए।",a:"घात नियम से dy/dx = 3x²\nउत्तर: 3x²"},
-{grade:12,chapter:"समाकलन",q:"∫ x² dx निकालिए।",a:"घात नियम: ∫xⁿ dx = xⁿ⁺¹/(n+1) + C\nइसलिए ∫x² dx = x³/3 + C"}
+const B = [
+ {g:6,c:"भिन्न और दशमलव",q:"1/2 + 1/4 का मान निकालिए।",a:"LCM(2,4)=4; 1/2=2/4; 2/4+1/4=3/4। उत्तर: 3/4"},
+ {g:6,c:"क्षेत्रमिति",q:"लंबाई 8 cm और चौड़ाई 5 cm के आयत का क्षेत्रफल निकालिए।",a:"क्षेत्रफल = लंबाई × चौड़ाई = 8×5 = 40 cm²"},
+ {g:7,c:"राशियों की तुलना",q:"200 का 15% निकालिए।",a:"15% = 15/100; 200×15/100=30। उत्तर: 30"},
+ {g:7,c:"सरल समीकरण",q:"x + 9 = 17 हल करें।",a:"x=17−9=8। उत्तर: x=8"},
+ {g:8,c:"रैखिक समीकरण",q:"3x − 6 = 12 हल करें।",a:"3x=18; x=18/3=6। उत्तर: x=6"},
+ {g:8,c:"वर्ग और वर्गमूल",q:"√144 निकालिए।",a:"12×12=144, इसलिए √144=12।"},
+ {g:9,c:"बहुपद",q:"x² − 5x + 6 के शून्यक ज्ञात करें।",a:"x²−5x+6=(x−2)(x−3), इसलिए शून्यक 2 और 3।"},
+ {g:9,c:"रैखिक समीकरण",q:"x+y=7 और x−y=1 हल करें।",a:"जोड़ने पर 2x=8 ⇒ x=4; फिर y=3।"},
+ {g:10,c:"द्विघात समीकरण",q:"x² − 5x + 6 = 0 हल करें।",a:"(x−2)(x−3)=0, इसलिए x=2 या x=3।"},
+ {g:10,c:"त्रिकोणमिति",q:"सामने वाली भुजा 3 और कर्ण 5 है। sin θ निकालें।",a:"sin θ = सामने वाली भुजा/कर्ण = 3/5।"},
+ {g:11,c:"अनुक्रम और श्रेणी",q:"AP 2,5,8,11,... का 10वाँ पद निकालें।",a:"a=2,d=3,n=10; aₙ=a+(n−1)d=2+27=29।"},
+ {g:11,c:"सीमा और अवकलज",q:"d/dx(x²) निकालें।",a:"घात नियम से d/dx(x²)=2x।"},
+ {g:12,c:"आव्यूह",q:"2 पंक्ति और 2 स्तंभ वाले matrix का order क्या है?",a:"Order = पंक्तियाँ × स्तंभ = 2×2।"},
+ {g:12,c:"समाकलन",q:"∫x² dx निकालें।",a:"∫x² dx = x³/3 + C।"}
 ];
 
 const $ = id => document.getElementById(id);
-function fillGrades(id){$(id).innerHTML=Object.keys(CHAPTERS).map(g=>`<option value="${g}">कक्षा ${g}</option>`).join('');}
-function fillChapters(id,grade){$(id).innerHTML='<option value="all">सभी अध्याय</option>'+CHAPTERS[grade].map(c=>`<option>${c}</option>`).join('');}
-function refreshChapters(){fillChapters('chapter',$('grade').value);}
-function showTab(tab){
- $('solvePanel').classList.toggle('hidden',tab!=='solve');$('bankPanel').classList.toggle('hidden',tab!=='bank');
- $('tabSolve').classList.toggle('active',tab==='solve');$('tabBank').classList.toggle('active',tab==='bank');
+
+function esc(s) {
+ return String(s).replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ }[c]));
 }
-function putQ(q){$('question').value=q;}
-function renderBank(){
- const g=Number($('bankGrade').value), ch=$('bankChapter').value, term=$('searchBank').value.trim().toLowerCase();
- const items=BANK_DATA.filter(x=>x.grade===g&&(ch==='all'||x.chapter===ch)&&(!term||(x.q+' '+x.a+' '+x.chapter).toLowerCase().includes(term)));
- $('bankList').innerHTML=items.length?items.map((x,i)=>`<div class="entry"><h3>कक्षा ${x.grade} • ${x.chapter}</h3><p><b>सवाल:</b> ${esc(x.q)}</p><p><b>हल:</b>\n${esc(x.a)}</p><button onclick="useBank(${BANK_DATA.indexOf(x)})">Solver में खोलें</button></div>`).join(''):'<p class="small">इस चयन में सवाल नहीं मिला। BANK_DATA में और सवाल जोड़े जा सकते हैं।';
+
+function fill(id,all=false,g=6) {
+ $(id).innerHTML =
+ (all ? '<option value="*">सभी अध्याय</option>' : '') +
+ C[g].map(c=>`<option>${esc(c)}</option>`).join('');
 }
-function useBank(i){const x=BANK_DATA[i];$('grade').value=x.grade;refreshChapters();$('chapter').value=x.chapter;$('question').value=x.q;showTab('solve');solveQuestion();}
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a;}
-function tokenize(s){
- s=s.replace(/[×·]/g,'*').replace(/÷/g,'/').replace(/[−–]/g,'-').replace(/,/g,'');
- s=s.replace(/(\d)\s*[xX]\b/g,'$1*x');
- s=s.replace(/(\d)\s*\(/g,'$1*(').replace(/\)\s*(\d|x|X)/g,')*$1');
- s=s.replace(/(\d)\s*√/g,'$1*sqrt');
- s=s.replace(/√\s*(\d+(?:\.\d+)?)/g,'sqrt($1)');
- const tokens=s.match(/\d+(?:\.\d+)?|sqrt|[()+\-*/^]/gi);
- if(!tokens||tokens.join('')!==s.replace(/\s/g,'')) throw Error('सवाल में कोई ऐसा चिन्ह है जिसे अभी Solver नहीं समझता।');
- return tokens;
+
+function classes(id) {
+ $(id).innerHTML=[6,7,8,9,10,11,12]
+ .map(g=>`<option value="${g}">कक्षा ${g}</option>`).join('');
 }
-function evalExpr(source){
- let t=tokenize(source),p=0;
- function primary(){let v=t[p++];if(v==='+' )return primary();if(v==='-')return -primary();if(v==='('){let x=add();if(t[p++]!==')')throw Error('Bracket बंद करें।');return x;}if(v&&v.toLowerCase()==='sqrt'){if(t[p++]!=='(')throw Error('√ के बाद संख्या/ब्रैकेट दें।');let n=add();if(t[p++]!==')')throw Error('Bracket बंद करें।');if(n<0)throw Error('वास्तविक संख्याओं में منفی संख्या का वर्गमूल नहीं निकाला जा सकता।');return Math.sqrt(n);}let n=Number(v);if(!Number.isFinite(n))throw Error('संख्या समझ नहीं आई।');return n;}
- function power(){let x=primary();if(t[p]==='^'){p++;x=Math.pow(x,power());}return x;}
- function mul(){let x=power();while(t[p]==='*'||t[p]==='/'){let op=t[p++],y=power();x=op==='*'?x*y:x/y;}return x;}
- function add(){let x=mul();while(t[p]==='+'||t[p]==='-'){let op=t[p++],y=mul();x=op==='+'?x+y:x-y;}return x;}
- let ans=add();if(p<t.length)throw Error('सवाल का पूरा expression नहीं पढ़ पाया।');if(!Number.isFinite(ans))throw Error('इस सवाल का मान सीमित संख्या नहीं है।');return ans;
+
+function page(p) {
+ $('solvePage').classList.toggle('hidden',p!=='solve');
+ $('bankPage').classList.toggle('hidden',p!=='bank');
+ $('n1').classList.toggle('active',p==='solve');
+ $('n2').classList.toggle('active',p==='bank');
 }
-function fmt(n){return Number.isInteger(n)?String(n):String(Number(n.toFixed(8)));}
-function solveLinear(eq){
- let sides=eq.split('=');if(sides.length!==2)throw Error('समीकरण में केवल एक = चिन्ह होना चाहिए।');
- function parseSide(s){
-  s=s.replace(/\s/g,'').replace(/-/g,'+-');if(s[0]==='+')s=s.slice(1);
-  let A=0,B=0,terms=s.split('+').filter(Boolean);
-  for(let term of terms){
-   if(/[xX]/.test(term)){
-    term=term.replace(/[xX]/g,'');let c=term.replace(/\*/g,'');if(c==='' )c='1';if(c==='-')c='-1';
-    A+=Number(c);
-   }else B+=Number(term);
-  }return [A,B];
+
+function ex(s) { $('q').value=s; }
+
+function render() {
+ let g=+$('bg').value;
+ let ch=$('bc').value;
+ let s=$('search').value.toLowerCase();
+
+ let a=B.filter(x=>x.g===g &&
+  (ch==='*'||x.c===ch) &&
+  (`${x.q} ${x.a} ${x.c}`).toLowerCase().includes(s));
+
+ $('results').innerHTML=a.length
+ ? a.map(x=>`<div class="entry">
+    <h3>कक्षा ${x.g} · ${esc(x.c)}</h3>
+    <p><b>सवाल:</b> ${esc(x.q)}</p>
+    <p><b>हल:</b> ${esc(x.a)}</p>
+    <button onclick="loadB(${B.indexOf(x)})">Solver में खोलें</button>
+   </div>`).join('')
+ : '<p class="hint">इस चयन में अभी सवाल नहीं है। बाद में सत्यापित सवाल जोड़े जा सकते हैं।';
+}
+
+function loadB(i) {
+ let x=B[i];
+ $('grade').value=x.g;
+ fill('chapter',false,x.g);
+ $('chapter').value=x.c;
+ $('q').value=x.q;
+ page('solve');
+ solve();
+}
+
+function gcd(a,b) {
+ while(b) [a,b]=[b,a%b];
+ return Math.abs(a);
+}
+
+function solveLinear(s) {
+ let z=s.split('=');
+ if(z.length!==2) throw Error('एक ही = चिन्ह रखें।');
+
+ function side(t) {
+  t=t.replace(/\s/g,'').replace(/-/g,'+-');
+  if(t[0]==='+') t=t.slice(1);
+  let a=0,b=0;
+
+  for(let v of t.split('+').filter(Boolean)) {
+   if(/[xX]/.test(v)) {
+    let n=v.replace(/[xX]/g,'').replace(/\*/g,'');
+    a+=Number(n===''||n==='+'?'1':n==='-'?'-1':n);
+   } else {
+    b+=Number(v);
+   }
+  }
+  return [a,b];
  }
- let [a,b]=parseSide(sides[0]),[c,d]=parseSide(sides[1]),coef=a-c,constant=d-b;
- if(Math.abs(coef)<1e-12){if(Math.abs(constant)<1e-12)return 'इस समीकरण के अनंत हल हैं।';return 'इस समीकरण का कोई हल नहीं है।';}
- let x=constant/coef;
- return `चरण 1: ${sides[0].trim()} = ${sides[1].trim()}\nचरण 2: x वाले पद एक तरफ और संख्याएँ दूसरी तरफ लाएँ।\nचरण 3: x = ${fmt(constant)} ÷ ${fmt(coef)}\nउत्तर: x = ${fmt(x)}`;
+
+ let [a,b]=side(z[0]);
+ let [c,d]=side(z[1]);
+ let k=a-c,n=d-b;
+
+ if(!k) return n?'कोई हल नहीं है।':'अनंत हल हैं।';
+
+ return `चरण 1: ${s}
+चरण 2: x वाले पद एक तरफ करें।
+चरण 3: x = ${n} ÷ ${k}
+उत्तर: x = ${Number((n/k).toFixed(8))}`;
 }
-function solveQuestion(){
- const raw=$('question').value.trim(),box=$('solveResult');box.classList.remove('hidden');
- if(!raw){box.textContent='पहले अपना सवाल लिखें।';return;}
- try{
-  let q=raw.replace(/,/g,'').replace(/[−–]/g,'-');
-  if(q.includes('=')&&/[xX]/.test(q)){box.textContent=solveLinear(q);return;}
+
+function solve() {
+ let s=$('q').value.trim().replace(/[−–]/g,'-');
+ let o=$('out');
+ o.classList.remove('hidden');
+
+ if(!s) {
+  o.textContent='पहले सवाल लिखें।';
+  return;
+ }
+
+ try {
   let m;
-  if((m=q.match(/(\d+(?:\.\d+)?)\s*का\s*(\d+(?:\.\d+)?)\s*%/i))){let a=+m[1],b=+m[2],v=a*b/100;box.textContent=`चरण 1: ${b}% = ${b}/100\nचरण 2: ${a} × ${b}/100\nउत्तर: ${fmt(v)}`;return;}
-  if((m=q.match(/(\d+(?:\.\d+)?)\s*%\s*(?:of|का)\s*(\d+(?:\.\d+)?)/i))){let a=+m[1],b=+m[2],v=a*b/100;box.textContent=`चरण 1: ${a}% = ${a}/100\nचरण 2: ${b} × ${a}/100\nउत्तर: ${fmt(v)}`;return;}
-  if((m=q.match(/(?:hcf|महत्तम समापवर्तक)\s*(?:of|का)?\s*(\d+)\s*(?:और|and|,)\s*(\d+)/i))|| (m=q.match(/(\d+)\s*(?:और|and)\s*(\d+)\s*(?:का\s*)?(?:hcf|महत्तम समापवर्तक)/i))){let a=+m[1],b=+m[2],v=gcd(a,b);box.textContent=`Euclid विधि से:\n${a} और ${b} का HCF = ${v}\nउत्तर: ${v}`;return;}
-  if((m=q.match(/(?:lcm|लघुत्तम समापवर्त्य)\s*(?:of|का)?\s*(\d+)\s*(?:और|and|,)\s*(\d+)/i))){let a=+m[1],b=+m[2],v=Math.abs(a*b)/gcd(a,b);box.textContent=`LCM × HCF = दोनों संख्याओं का गुणनफल\nLCM = ${a} × ${b} ÷ ${gcd(a,b)}\nउत्तर: ${v}`;return;}
-  q=q.replace(/^(?:हल करें|हल करो|solve|calculate)\s*/i,'').replace(/का मान निकालिए|का मान निकालो|हल कीजिए|हल करो/gi,'').trim();
-  let value=evalExpr(q);box.textContent=`चरण 1: सवाल को गणितीय expression के रूप में पढ़ा।\nचरण 2: क्रम के अनुसार गणना की।\nउत्तर: ${fmt(value)}\n\nध्यान दें: यह सामान्य गणना का हल है; प्रमाण/लंबी विधि वाले सवालों के लिए अलग समाधान नियम जोड़ने होंगे।`;
- }catch(e){box.textContent='अभी इस सवाल को हल नहीं कर पाया।\nकारण: '+e.message+'\n\nआप इसे Question Bank में जोड़ सकते हैं या सवाल को सरल रूप में लिखें।';}
+
+  if(s.includes('=') && /[xX]/.test(s)) {
+   o.textContent=solveLinear(s);
+   return;
+  }
+
+  if(m=s.match(/(\d+(?:\.\d+)?)\s*का\s*(\d+(?:\.\d+)?)\s*%/i)) {
+   o.textContent=`चरण 1: ${m[2]}% = ${m[2]}/100
+चरण 2: ${m[1]} × ${m[2]}/100
+उत्तर: ${+m[1]*+m[2]/100}`;
+   return;
+  }
+
+  if(m=s.match(/(\d+)\s*(?:और|and)\s*(\d+)\s*(?:का\s*)?HCF/i)) {
+   o.textContent=`${m[1]} और ${m[2]} का HCF = ${gcd(+m[1],+m[2])}`;
+   return;
+  }
+
+  let e=s.replace(/×/g,'*')
+   .replace(/÷/g,'/')
+   .replace(/,/g,'')
+   .replace(/√\s*(\d+(?:\.\d+)?)/g,'Math.sqrt($1)')
+   .replace(/(\d)\s*[xX]\b/g,'$1*x')
+   .replace(/(\d)\s*\(/g,'$1*(')
+   .replace(/\^/g,'**');
+
+  if(!/^[\d\s.+\-*/()Mathsqrt*]+$/i.test(e))
+   throw Error('यह सवाल अभी समर्थित नहीं है।');
+
+  let v=Function('"use strict";return ('+e+')')();
+
+  if(!Number.isFinite(v)) throw Error('उत्तर नहीं मिला।');
+
+  o.textContent=`चरण 1: expression को पढ़ा।
+चरण 2: गणना की।
+उत्तर: ${Number(v.toFixed(8))}`;
+
+ } catch(err) {
+  o.textContent='यह सवाल अभी Solver में समर्थित नहीं है।\n'
+   +err.message+
+   '\n\nअध्यायवार नमूने Question Bank में देखें।';
+ }
 }
-fillGrades('grade');fillGrades('bankGrade');refreshChapters();fillChapters('bankChapter',$('bankGrade').value);$('bankGrade').addEventListener('change',()=>fillChapters('bankChapter',$('bankGrade').value));renderBank();
+
+classes('grade');
+classes('bg');
+fill('chapter',false,6);
+fill('bc',true,6);
+
+$('grade').addEventListener('change',()=>{
+ fill('chapter',false,+$('grade').value);
+});
+
+$('bg').addEventListener('change',()=>{
+ fill('bc',true,+$('bg').value);
+ render();
+});
+
+render();
 </script>
 </body>
 </html>
