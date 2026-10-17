@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d20">
+<title>AJIT AI — Math Solver</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:radial-gradient(circle at top,#152b59,#080d20 65%);color:#fff;min-height:100vh;padding:20px}
+.app{max-width:600px;margin:auto}
+header{text-align:center;padding:25px 10px}
+.logo{width:76px;height:76px;border:2px solid #47caff;border-radius:24px;margin:auto;display:grid;place-items:center;font-size:34px;font-weight:bold;color:#70dcff;box-shadow:0 0 25px #148aff55;animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-7px) rotate(3deg)}}
+h1{margin:17px 0 5px;font-size:30px;letter-spacing:1px}
+h1 span{color:#53ceff}
+.sub{color:#a9bbdc;font-size:14px}
+.panel{background:#101a32dd;border:1px solid #29466e;border-radius:22px;padding:20px;margin:18px 0;box-shadow:0 12px 35px #0003}
+label{display:block;margin-bottom:12px;font-weight:bold}
+textarea{width:100%;min-height:120px;background:#080f23;color:white;border:1px solid #344b70;border-radius:13px;padding:15px;font-size:17px;resize:vertical;outline:none}
+textarea:focus{border-color:#4ccaff}
+button{border:0;border-radius:12px;padding:14px;font-size:16px;font-weight:bold;cursor:pointer}
+.solve{width:100%;margin-top:13px;background:linear-gradient(100deg,#1677ff,#20c7e8);color:white}
+.secondary{background:#1c2c4b;color:#d7e8ff}
+.row{display:flex;gap:10px;margin-top:12px}
+.row button{flex:1}
+.result{display:none;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8;color:#e4f4ff}
+.result h3{color:#5ed7ff;margin-top:0}
+.status{font-size:13px;color:#9db4d8;margin-top:10px;text-align:center}
+footer{text-align:center;color:#8196b9;font-size:12px;padding:20px}
+</style>
+</head>
+<body>
+<main class="app">
+<header>
+<div class="logo">A<span style="color:white">∑</span></div>
+<h1>AJIT <span>AI</span></h1>
+<div class="sub">YOUR PERSONAL MATH SOLVER</div>
+</header>
+
+<section class="panel">
+<label for="question">🧮 अपना गणित का सवाल लिखें</label>
+<textarea id="question" placeholder="उदाहरण: 25 × 16&#10;या: 2x + 5 = 15"></textarea>
+<button class="solve" id="solve">✦ सवाल हल करें</button>
+<div class="row">
+<button class="secondary" id="clear">साफ करें</button>
+<button class="secondary" id="example">उदाहरण देखें</button>
+</div>
+<div class="status" id="status">केवल Maths • मुफ्त में इस्तेमाल करें</div>
+</section>
+
+<section class="panel" id="output" style="display:none">
+<div class="result" id="result"></div>
+</section>
+
+<footer>AJIT AI MATH SOLVER • Made with ❤️</footer>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const q=$("question"),status=$("status");
+
+function tokenize(s){
+ const t=[];
+ let i=0;
+ while(i<s.length){
+  if(/\s/.test(s[i])){i++;continue}
+  const n=s.slice(i).match(/^(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?/i);
+  if(n){t.push({type:"num",v:Number(n[0])});i+=n[0].length;continue}
+  if("+-*/^()%".includes(s[i])){t.push({type:s[i]});i++;continue}
+  throw Error("इस सवाल में कोई ऐसा चिन्ह है जिसे यह Solver नहीं पहचानता।")
+ }
+ return t;
+}
+function calculate(s){
+ const t=tokenize(s);let p=0;
+ function expr(){let v=term();while(t[p]&&["+", "-"].includes(t[p].type)){let o=t[p++].type,r=term();v=o==="+"?v+r:v-r}return v}
+ function term(){let v=unary();while(t[p]&&["*","/","%"].includes(t[p].type)){let o=t[p++].type,r=unary();if((o==="/"||o==="%")&&r===0)throw Error("शून्य से भाग नहीं दे सकते।");v=o==="*"?v*r:o==="/"?v/r:v%r}return v}
+ function unary(){if(t[p]?.type==="+"){p++;return unary()}if(t[p]?.type==="-"){p++;return -unary()}return power()}
+ function power(){let v=atom();if(t[p]?.type==="^"){p++;v=Math.pow(v,unary())}return v}
+ function atom(){const a=t[p++];if(!a)throw Error("कृपया पूरा सवाल लिखें।");if(a.type==="num")return a.v;if(a.type==="("){let v=expr();if(t[p++]?.type!==")")throw Error("कोष्ठक बंद करें।");return v}throw Error("सवाल की गणितीय अभिव्यक्ति जाँचें।")}
+ if(!t.length)throw Error("पहले सवाल लिखें।");
+ const v=expr();if(p!==t.length)throw Error("सवाल की बनावट जाँचें।");
+ if(!Number.isFinite(v))throw Error("इस सवाल का मान नहीं निकाला जा सका।");
+ return v;
+}
+function show(title,text){
+ $("output").style.display="block";
+ $("result").style.display="block";
+ $("result").innerHTML="";
+ const h=document.createElement("h3");h.textContent=title;
+ const d=document.createElement("div");d.textContent=text;
+ $("result").append(h,d);
+}
+$("solve").addEventListener("click",()=>{
+ const s=q.value.trim();
+ if(!s){status.textContent="पहले अपना Maths सवाल लिखो।";q.focus();return}
+ try{
+  status.textContent="सवाल हल किया जा रहा है...";
+  const normalized=s.replace(/×/g,"*").replace(/÷/g,"/");
+  const answer=calculate(normalized);
+  const formatted=Number(answer.toPrecision(12)).toString();
+  show("✅ आपका उत्तर",s+" = "+formatted+"\n\nहल:\n1. गणितीय अभिव्यक्ति को क्रम के अनुसार हल किया गया।\n2. पहले कोष्ठक, घात, गुणा/भाग और फिर जोड़/घटाव लागू किए गए।\n3. अंतिम उत्तर: "+formatted);
+  status.textContent="गणना सफल रही।";
+ }catch(e){
+  show("⚠️ सवाल हल नहीं हुआ",e.message+"\n\nयह शुरुआती Solver संख्यात्मक अभिव्यक्तियाँ हल करता है। समीकरण, शब्द-प्रश्न और सभी प्रकार के Maths अभी समर्थित नहीं हैं।");
+  status.textContent="सवाल जाँचें और दोबारा कोशिश करें।";
+ }
+});
+$("clear").addEventListener("click",()=>{
+ q.value="";$("output").style.display="none";status.textContent="नया सवाल लिखें।";q.focus();
+});
+$("example").addEventListener("click",()=>{
+ q.value="25 × 16";status.textContent="अब सवाल हल करें पर क्लिक करें।";q.focus();
+});
+q.addEventListener("keydown",e=>{
+ if((e.ctrlKey||e.metaKey)&&e.key==="Enter")$("solve").click();
+});
+</script>
+</body>
+</html>
