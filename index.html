@@ -1,642 +1,410 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#030817">
-<title>ZERO KATA GAME</title>
+<title>ZERO KATA | AJIT</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+ min-height:100vh;background:#030817;color:white;
+ font-family:Arial,sans-serif;display:flex;
+ justify-content:center;align-items:center;padding:16px;
 }
-
-body {
-  min-height: 100vh;
-  background: #030817;
-  color: white;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 18px;
+.game{width:100%;max-width:430px;text-align:center}
+.logo{
+ font-size:35px;font-weight:900;letter-spacing:3px;
+ color:#00dfff;text-shadow:0 0 15px #008cff;margin-bottom:7px
 }
-
-.game {
-  width: 100%;
-  max-width: 430px;
-  text-align: center;
+.subtitle{font-size:12px;letter-spacing:3px;color:#819bbd;margin-bottom:24px}
+.panel{
+ background:#0a1429;border:1px solid #16416c;
+ border-radius:17px;padding:16px;margin-bottom:16px;
+ box-shadow:0 0 20px #0066ff18
 }
-
-.logo {
-  font-size: 35px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  color: #00d9ff;
-  text-shadow: 0 0 15px #008cff;
-  margin-bottom: 8px;
+h3{font-size:14px;color:#a9c9ee;margin-bottom:13px}
+.modes{display:flex;gap:10px}
+button{font-family:inherit;font-weight:bold;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.mode{
+ flex:1;padding:13px 5px;border:1px solid #164b79;
+ background:#101f38;color:white;border-radius:10px
 }
-
-.subtitle {
-  color: #91a6c7;
-  font-size: 13px;
-  letter-spacing: 3px;
-  margin-bottom: 25px;
+.mode.active{background:#006dff;border-color:#00d9ff;box-shadow:0 0 14px #007bff70}
+.scores{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:16px}
+.score{background:#0b1830;border:1px solid #173b62;border-radius:12px;padding:12px 4px}
+.name{font-size:11px;color:#91a9c7;margin-bottom:7px}
+.number{font-size:25px;font-weight:bold}
+.xcolor{color:#00dfff}
+.ocolor{color:#ff4fcb}
+.dcolor{color:#ffd166}
+.status{font-size:16px;color:#00dfff;font-weight:bold;min-height:22px;margin:17px 0}
+.board-wrap{position:relative;width:100%;max-width:360px;margin:auto}
+.board{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:10px;width:100%
 }
-
-.panel {
-  background: #0a1429;
-  border: 1px solid #123b66;
-  border-radius: 18px;
-  padding: 17px;
-  box-shadow: 0 0 25px #0066ff20;
-  margin-bottom: 17px;
+.cell{
+ aspect-ratio:1;background:#0b1931;
+ border:1px solid #14518a;border-radius:14px;
+ font-size:clamp(43px,14vw,65px);font-weight:900;
+ box-shadow:inset 0 0 12px #007bff15;
+ transition:background .2s
 }
-
-h3 {
-  font-size: 15px;
-  color: #a9c9ee;
-  margin-bottom: 13px;
+.cell:active{transform:scale(.96)}
+.cell.x{color:#00e5ff;text-shadow:0 0 18px #00d9ff}
+.cell.o{color:#ff4fcb;text-shadow:0 0 18px #ff4fcb}
+.cell.win{background:#103b55;border-color:#00e5ff}
+.win-line{
+ position:absolute;height:6px;border-radius:10px;
+ background:#fff;box-shadow:0 0 8px #fff,0 0 17px #00e5ff,0 0 30px #00e5ff;
+ z-index:5;pointer-events:none;
+ transform-origin:left center;
+ animation:lineShow .35s ease-out forwards;
 }
-
-.modes {
-  display: flex;
-  gap: 10px;
+@keyframes lineShow{
+ from{opacity:0;transform:scaleX(0)}
+ to{opacity:1;transform:scaleX(1)}
 }
-
-button {
-  cursor: pointer;
-  font-weight: bold;
-  font-family: inherit;
-  -webkit-tap-highlight-color: transparent;
+.actions{display:flex;gap:10px;margin-top:18px}
+.action{flex:1;padding:14px 4px;border:0;border-radius:10px;color:white;font-size:12px}
+.restart{background:linear-gradient(135deg,#007bff,#00cfff)}
+.reset{background:#172944;border:1px solid #315579}
+.sound{
+ margin-top:14px;background:transparent;color:#a9c9ee;
+ border:1px solid #285079;padding:10px 18px;border-radius:25px
 }
-
-.mode {
-  flex: 1;
-  padding: 13px 5px;
-  border: 1px solid #164b79;
-  background: #101f38;
-  color: white;
-  border-radius: 10px;
-  font-size: 13px;
-}
-
-.mode.active {
-  background: #006dff;
-  border-color: #00d9ff;
-  box-shadow: 0 0 15px #007bff80;
-}
-
-.scores {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 9px;
-  margin-bottom: 17px;
-}
-
-.score {
-  background: #0b1830;
-  border: 1px solid #173b62;
-  padding: 13px 4px;
-  border-radius: 13px;
-}
-
-.score .name {
-  color: #8ba9ca;
-  font-size: 12px;
-  margin-bottom: 7px;
-}
-
-.score .number {
-  font-size: 25px;
-  font-weight: bold;
-}
-
-.x-color { color: #00d9ff; }
-.o-color { color: #ff4fcb; }
-.draw-color { color: #ffd166; }
-
-.status {
-  font-size: 17px;
-  font-weight: bold;
-  color: #00d9ff;
-  margin: 19px 0;
-  min-height: 23px;
-}
-
-.board {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 11px;
-  width: 100%;
-  margin: auto;
-}
-
-.cell {
-  aspect-ratio: 1 / 1;
-  background: #0b1931;
-  border: 1px solid #14518a;
-  border-radius: 15px;
-  font-size: clamp(42px, 14vw, 65px);
-  font-weight: 900;
-  transition: .2s;
-  box-shadow: inset 0 0 12px #007bff10;
-}
-
-.cell:active {
-  transform: scale(.94);
-}
-
-.cell.x {
-  color: #00e5ff;
-  text-shadow: 0 0 18px #00d9ff;
-}
-
-.cell.o {
-  color: #ff4fcb;
-  text-shadow: 0 0 18px #ff4fcb;
-}
-
-.cell.win {
-  background: #103b55;
-  border-color: #00e5ff;
-  box-shadow: 0 0 20px #00d9ff80;
-  animation: glow .8s infinite alternate;
-}
-
-@keyframes glow {
-  from { transform: scale(1); }
-  to { transform: scale(1.04); }
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 19px;
-}
-
-.action {
-  flex: 1;
-  padding: 14px 5px;
-  border: none;
-  border-radius: 11px;
-  color: white;
-  font-size: 13px;
-}
-
-.restart {
-  background: linear-gradient(135deg,#007bff,#00cfff);
-}
-
-.reset {
-  background: #172944;
-  border: 1px solid #315579;
-}
-
-.sound {
-  margin-top: 15px;
-  background: transparent;
-  border: 1px solid #285079;
-  color: #a9c9ee;
-  padding: 10px 18px;
-  border-radius: 30px;
-}
-
-.footer {
-  margin-top: 23px;
-  color: #617b9b;
-  font-size: 11px;
-  letter-spacing: 2px;
-}
-
-.hidden {
-  display: none;
-}
-
-@media(max-width:350px) {
-  .logo { font-size: 28px; }
-  .panel { padding: 12px; }
-  .board { gap: 7px; }
-  .cell { border-radius: 10px; }
+.footer{font-size:11px;color:#617b9b;letter-spacing:2px;margin-top:22px}
+@media(max-width:350px){
+ .logo{font-size:28px}.panel{padding:12px}.board{gap:7px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="game">
 
-  <div class="logo">ZERO KATA</div>
-  <div class="subtitle">ULTIMATE TIC TAC TOE</div>
+<div class="logo">ZERO KATA</div>
+<div class="subtitle">ULTIMATE TIC TAC TOE</div>
 
-  <div class="panel">
-    <h3>SELECT GAME MODE</h3>
-    <div class="modes">
-      <button class="mode active" id="computerMode">
-        🤖 Computer
-      </button>
-      <button class="mode" id="twoPlayerMode">
-        👥 2 Players
-      </button>
-    </div>
-  </div>
+<div class="panel">
+<h3>SELECT GAME MODE</h3>
+<div class="modes">
+<button class="mode active" id="computerMode">🤖 Computer</button>
+<button class="mode" id="twoPlayerMode">👥 2 Players</button>
+</div>
+</div>
 
-  <div class="scores">
-    <div class="score">
-      <div class="name" id="xName">YOU (X)</div>
-      <div class="number x-color" id="xScore">0</div>
-    </div>
+<div class="scores">
+<div class="score">
+<div class="name" id="xName">YOU (X)</div>
+<div class="number xcolor" id="xScore">0</div>
+</div>
+<div class="score">
+<div class="name">DRAW</div>
+<div class="number dcolor" id="drawScore">0</div>
+</div>
+<div class="score">
+<div class="name" id="oName">COMPUTER (O)</div>
+<div class="number ocolor" id="oScore">0</div>
+</div>
+</div>
 
-    <div class="score">
-      <div class="name">DRAW</div>
-      <div class="number draw-color" id="drawScore">0</div>
-    </div>
+<div class="panel">
+<h3>GAME BOARD</h3>
+<div class="status" id="status">YOUR TURN (X)</div>
 
-    <div class="score">
-      <div class="name" id="oName">COMPUTER (O)</div>
-      <div class="number o-color" id="oScore">0</div>
-    </div>
-  </div>
+<div class="board-wrap" id="boardWrap">
+<div class="board" id="board">
+<button class="cell" data-index="0"></button>
+<button class="cell" data-index="1"></button>
+<button class="cell" data-index="2"></button>
+<button class="cell" data-index="3"></button>
+<button class="cell" data-index="4"></button>
+<button class="cell" data-index="5"></button>
+<button class="cell" data-index="6"></button>
+<button class="cell" data-index="7"></button>
+<button class="cell" data-index="8"></button>
+</div>
+</div>
 
-  <div class="panel">
-    <h3>GAME BOARD</h3>
+<div class="actions">
+<button class="action restart" id="restart">↻ NEW ROUND</button>
+<button class="action reset" id="reset">RESET SCORE</button>
+</div>
 
-    <div class="status" id="status">
-      YOUR TURN (X)
-    </div>
+<button class="sound" id="sound">🔊 SOUND ON</button>
+</div>
 
-    <div class="board" id="board">
-      <button class="cell" data-index="0"></button>
-      <button class="cell" data-index="1"></button>
-      <button class="cell" data-index="2"></button>
-      <button class="cell" data-index="3"></button>
-      <button class="cell" data-index="4"></button>
-      <button class="cell" data-index="5"></button>
-      <button class="cell" data-index="6"></button>
-      <button class="cell" data-index="7"></button>
-      <button class="cell" data-index="8"></button>
-    </div>
-
-    <div class="actions">
-      <button class="action restart" id="restart">
-        ↻ NEW ROUND
-      </button>
-
-      <button class="action reset" id="reset">
-        RESET SCORE
-      </button>
-    </div>
-
-    <button class="sound" id="sound">
-      🔊 SOUND ON
-    </button>
-  </div>
-
-  <div class="footer">
-    POWERED BY AJIT • ZERO KATA
-  </div>
-
+<div class="footer">POWERED BY AJIT • ZERO KATA</div>
 </div>
 
 <script>
-const cells = [...document.querySelectorAll(".cell")];
+const cells=[...document.querySelectorAll(".cell")];
+const boardWrap=document.getElementById("boardWrap");
+const statusText=document.getElementById("status");
 
-const statusText = document.getElementById("status");
+let board=Array(9).fill("");
+let currentPlayer="X";
+let gameOver=false;
+let mode="computer";
+let soundOn=true;
+let aiTimer=null;
+let scores={X:0,O:0,draw:0};
 
-const xScoreEl = document.getElementById("xScore");
-const oScoreEl = document.getElementById("oScore");
-const drawScoreEl = document.getElementById("drawScore");
-
-const computerMode = document.getElementById("computerMode");
-const twoPlayerMode = document.getElementById("twoPlayerMode");
-
-let board = Array(9).fill("");
-let currentPlayer = "X";
-let gameOver = false;
-let mode = "computer";
-let soundOn = true;
-let scores = { X: 0, O: 0, draw: 0 };
-
-const winningLines = [
-  [0,1,2],
-  [3,4,5],
-  [3,4,5],
-  [0,3,6],
-  [1,4,7],
-  [2,5,8],
-  [0,4,8],
-  [2,4,6]
+const winningLines=[
+[0,1,2],[3,4,5],[6,7,8],
+[0,3,6],[1,4,7],[2,5,8],
+[0,4,8],[2,4,6]
 ];
 
-// Sound effects
-function playSound(frequency = 500) {
-  if (!soundOn) return;
-
-  try {
-    const AudioContext =
-      window.AudioContext || window.webkitAudioContext;
-
-    const audio = new AudioContext();
-    const oscillator = audio.createOscillator();
-    const gain = audio.createGain();
-
-    oscillator.connect(gain);
-    gain.connect(audio.destination);
-
-    oscillator.frequency.value = frequency;
-    oscillator.type = "sine";
-
-    gain.gain.setValueAtTime(0.12, audio.currentTime);
-    gain.gain.exponentialRampToValueAtTime(
-      0.001, audio.currentTime + 0.15
-    );
-
-    oscillator.start();
-    oscillator.stop(audio.currentTime + 0.15);
-
-    oscillator.onended = () => audio.close();
-  } catch (e) {}
+function playSound(freq=500){
+ if(!soundOn)return;
+ try{
+  const AC=window.AudioContext||window.webkitAudioContext;
+  const audio=new AC();
+  const osc=audio.createOscillator();
+  const gain=audio.createGain();
+  osc.connect(gain);gain.connect(audio.destination);
+  osc.frequency.value=freq;
+  gain.gain.setValueAtTime(.12,audio.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.16);
+  osc.start();osc.stop(audio.currentTime+.16);
+  osc.onended=()=>audio.close();
+ }catch(e){}
 }
 
-// Check winner
-function checkWinner(b) {
-  for (const line of winningLines) {
-    const [a, c, d] = line;
-
-    if (
-      b[a] &&
-      b[a] === b[c] &&
-      b[a] === b[d]
-    ) {
-      return {
-        winner: b[a],
-        line: line
-      };
-    }
+function checkWinner(b){
+ for(const line of winningLines){
+  const [a,c,d]=line;
+  if(b[a]&&b[a]===b[c]&&b[a]===b[d]){
+   return {winner:b[a],line};
   }
-
-  return null;
+ }
+ return null;
 }
 
-// Update scoreboard
-function updateScores() {
-  xScoreEl.textContent = scores.X;
-  oScoreEl.textContent = scores.O;
-  drawScoreEl.textContent = scores.draw;
+function updateScores(){
+ document.getElementById("xScore").textContent=scores.X;
+ document.getElementById("oScore").textContent=scores.O;
+ document.getElementById("drawScore").textContent=scores.draw;
 }
 
-// Change game status
-function setStatus(message) {
-  statusText.textContent = message;
+function renderBoard(){
+ cells.forEach((cell,i)=>{
+  cell.textContent=board[i];
+  cell.className="cell";
+  if(board[i]==="X")cell.classList.add("x");
+  if(board[i]==="O")cell.classList.add("o");
+  cell.disabled=gameOver||board[i]!==""||
+   (mode==="computer"&&currentPlayer==="O");
+ });
 }
 
-// Draw board
-function renderBoard() {
-  cells.forEach((cell, i) => {
-    cell.textContent = board[i];
-    cell.className = "cell";
-
-    if (board[i] === "X") {
-      cell.classList.add("x");
-    }
-
-    if (board[i] === "O") {
-      cell.classList.add("o");
-    }
-
-    cell.disabled = gameOver || board[i] !== "";
-  });
+function removeWinLine(){
+ const old=document.getElementById("winLine");
+ if(old)old.remove();
 }
 
-// Handle move
-function makeMove(index) {
-  if (gameOver || board[index] !== "") return;
+function drawWinningLine(line){
+ removeWinLine();
 
-  if (mode === "computer" && currentPlayer !== "X") return;
+ line.forEach(i=>cells[i].classList.add("win"));
 
-  board[index] = currentPlayer;
-  playSound(currentPlayer === "X" ? 600 : 400);
+ const first=cells[line[0]];
+ const last=cells[line[2]];
 
-  renderBoard();
+ const wrapRect=boardWrap.getBoundingClientRect();
+ const r1=first.getBoundingClientRect();
+ const r2=last.getBoundingClientRect();
 
-  if (finishCheck()) return;
+ const x1=r1.left+r1.width/2-wrapRect.left;
+ const y1=r1.top+r1.height/2-wrapRect.top;
+ const x2=r2.left+r2.width/2-wrapRect.left;
+ const y2=r2.top+r2.height/2-wrapRect.top;
 
-  currentPlayer = currentPlayer === "X" ? "O" : "X";
+ const dx=x2-x1;
+ const dy=y2-y1;
+ const length=Math.sqrt(dx*dx+dy*dy);
+ const angle=Math.atan2(dy,dx)*180/Math.PI;
 
-  if (mode === "computer") {
-    setStatus("COMPUTER THINKING... 🤖");
+ const lineEl=document.createElement("div");
+ lineEl.id="winLine";
+ lineEl.className="win-line";
+ lineEl.style.width=length+"px";
+ lineEl.style.left=x1+"px";
+ lineEl.style.top=(y1-3)+"px";
+ lineEl.style.transform="rotate("+angle+"deg) scaleX(0)";
 
-    cells.forEach(cell => cell.disabled = true);
+ boardWrap.appendChild(lineEl);
 
-    setTimeout(() => {
-      computerMove();
-    }, 450);
-  } else {
-    setStatus(
-      currentPlayer === "X"
-        ? "PLAYER 1 (X) TURN"
-        : "PLAYER 2 (O) TURN"
-    );
+ requestAnimationFrame(()=>{
+  lineEl.style.animation="lineShow .35s ease-out forwards";
+ });
+}
+
+function minimax(b,depth,isMax){
+ const result=checkWinner(b);
+ if(result?.winner==="O")return 10-depth;
+ if(result?.winner==="X")return depth-10;
+ if(b.every(v=>v!==""))return 0;
+
+ if(isMax){
+  let best=-Infinity;
+  for(let i=0;i<9;i++){
+   if(b[i]===""){
+    b[i]="O";
+    best=Math.max(best,minimax(b,depth+1,false));
+    b[i]="";
+   }
   }
+  return best;
+ }else{
+  let best=Infinity;
+  for(let i=0;i<9;i++){
+   if(b[i]===""){
+    b[i]="X";
+    best=Math.min(best,minimax(b,depth+1,true));
+    b[i]="";
+   }
+  }
+  return best;
+ }
 }
 
-// Check game result
-function finishCheck() {
-  const result = checkWinner(board);
+function finishCheck(){
+ const result=checkWinner(board);
 
-  if (result) {
-    gameOver = true;
-    scores[result.winner]++;
-
-    result.line.forEach(i => {
-      cells[i].classList.add("win");
-    });
-
-    updateScores();
-
-    if (mode === "computer") {
-      setStatus(
-        result.winner === "X"
-          ? "🎉 YOU WIN!"
-          : "🤖 COMPUTER WINS!"
-      );
-    } else {
-      setStatus(
-        result.winner === "X"
-          ? "🏆 PLAYER 1 WINS!"
-          : "🏆 PLAYER 2 WINS!"
-      );
-    }
-
-    playSound(850);
-    renderBoard();
-    return true;
-  }
-
-  if (board.every(cell => cell !== "")) {
-    gameOver = true;
-    scores.draw++;
-    updateScores();
-    setStatus("🤝 MATCH DRAW!");
-    playSound(300);
-    renderBoard();
-    return true;
-  }
-
-  return false;
-}
-
-// Minimax AI
-function minimax(b, depth, isMax) {
-  const result = checkWinner(b);
-
-  if (result?.winner === "O") return 10 - depth;
-  if (result?.winner === "X") return depth - 10;
-  if (b.every(cell => cell !== "")) return 0;
-
-  if (isMax) {
-    let best = -Infinity;
-
-    for (let i = 0; i < 9; i++) {
-      if (b[i] === "") {
-        b[i] = "O";
-        best = Math.max(
-          best,
-          minimax(b, depth + 1, false)
-        );
-        b[i] = "";
-      }
-    }
-
-    return best;
-  } else {
-    let best = Infinity;
-
-    for (let i = 0; i < 9; i++) {
-      if (b[i] === "") {
-        b[i] = "X";
-        best = Math.min(
-          best,
-          minimax(b, depth + 1, true)
-        );
-        b[i] = "";
-      }
-    }
-
-    return best;
-  }
-}
-
-// Computer move
-function computerMove() {
-  if (gameOver || mode !== "computer") return;
-
-  let bestScore = -Infinity;
-  let bestMove = -1;
-
-  for (let i = 0; i < 9; i++) {
-    if (board[i] === "") {
-      board[i] = "O";
-
-      let score = minimax(board, 0, false);
-
-      board[i] = "";
-
-      if (score > bestScore) {
-        bestScore = score;
-        bestMove = i;
-      }
-    }
-  }
-
-  if (bestMove !== -1) {
-    board[bestMove] = "O";
-    playSound(400);
-    renderBoard();
-
-    if (finishCheck()) return;
-
-    currentPlayer = "X";
-    setStatus("YOUR TURN (X)");
-  }
-}
-
-// Start new round
-function newRound() {
-  board = Array(9).fill("");
-  currentPlayer = "X";
-  gameOver = false;
-
-  renderBoard();
-
-  setStatus(
-    mode === "computer"
-      ? "YOUR TURN (X)"
-      : "PLAYER 1 (X) TURN"
-  );
-}
-
-// Mode selection
-computerMode.addEventListener("click", () => {
-  mode = "computer";
-
-  computerMode.classList.add("active");
-  twoPlayerMode.classList.remove("active");
-
-  document.getElementById("xName").textContent = "YOU (X)";
-  document.getElementById("oName").textContent = "COMPUTER (O)";
-
-  newRound();
-});
-
-twoPlayerMode.addEventListener("click", () => {
-  mode = "2player";
-
-  twoPlayerMode.classList.add("active");
-  computerMode.classList.remove("active");
-
-  document.getElementById("xName").textContent = "PLAYER 1 (X)";
-  document.getElementById("oName").textContent = "PLAYER 2 (O)";
-
-  newRound();
-});
-
-// Board clicks
-cells.forEach((cell, index) => {
-  cell.addEventListener("click", () => {
-    makeMove(index);
-  });
-});
-
-// Restart
-document.getElementById("restart").addEventListener("click", () => {
-  newRound();
-});
-
-// Reset score
-document.getElementById("reset").addEventListener("click", () => {
-  scores = { X: 0, O: 0, draw: 0 };
+ if(result){
+  gameOver=true;
+  scores[result.winner]++;
   updateScores();
-  newRound();
+  renderBoard();
+
+  statusText.textContent=mode==="computer"
+   ?(result.winner==="X"?"🎉 YOU WIN!":"🤖 COMPUTER WINS!")
+   :(result.winner==="X"?"🏆 PLAYER 1 WINS!":"🏆 PLAYER 2 WINS!");
+
+  drawWinningLine(result.line);
+  playSound(850);
+  return true;
+ }
+
+ if(board.every(v=>v!=="")){
+  gameOver=true;
+  scores.draw++;
+  updateScores();
+  statusText.textContent="🤝 MATCH DRAW!";
+  renderBoard();
+  playSound(300);
+  return true;
+ }
+
+ return false;
+}
+
+function makeMove(index){
+ if(gameOver||board[index]!==""||
+ (mode==="computer"&&currentPlayer!=="X"))return;
+
+ board[index]=currentPlayer;
+ playSound(currentPlayer==="X"?600:400);
+ renderBoard();
+
+ if(finishCheck())return;
+
+ currentPlayer=currentPlayer==="X"?"O":"X";
+
+ if(mode==="computer"){
+  statusText.textContent="COMPUTER THINKING... 🤖";
+  renderBoard();
+  aiTimer=setTimeout(computerMove,450);
+ }else{
+  statusText.textContent=currentPlayer==="X"
+   ?"PLAYER 1 (X) TURN":"PLAYER 2 (O) TURN";
+  renderBoard();
+ }
+}
+
+function computerMove(){
+ if(gameOver||mode!=="computer"||currentPlayer!=="O")return;
+
+ let best=-Infinity;
+ let bestMove=-1;
+
+ for(let i=0;i<9;i++){
+  if(board[i]===""){
+   board[i]="O";
+   const score=minimax(board,0,false);
+   board[i]="";
+   if(score>best){
+    best=score;
+    bestMove=i;
+   }
+  }
+ }
+
+ if(bestMove!==-1){
+  board[bestMove]="O";
+  playSound(400);
+  renderBoard();
+  if(finishCheck())return;
+  currentPlayer="X";
+  statusText.textContent="YOUR TURN (X)";
+  renderBoard();
+ }
+}
+
+function newRound(){
+ clearTimeout(aiTimer);
+ board=Array(9).fill("");
+ currentPlayer="X";
+ gameOver=false;
+ removeWinLine();
+ statusText.textContent=mode==="computer"
+  ?"YOUR TURN (X)":"PLAYER 1 (X) TURN";
+ renderBoard();
+}
+
+document.getElementById("computerMode").onclick=()=>{
+ mode="computer";
+ document.getElementById("computerMode").classList.add("active");
+ document.getElementById("twoPlayerMode").classList.remove("active");
+ document.getElementById("xName").textContent="YOU (X)";
+ document.getElementById("oName").textContent="COMPUTER (O)";
+ newRound();
+};
+
+document.getElementById("twoPlayerMode").onclick=()=>{
+ mode="2player";
+ document.getElementById("twoPlayerMode").classList.add("active");
+ document.getElementById("computerMode").classList.remove("active");
+ document.getElementById("xName").textContent="PLAYER 1 (X)";
+ document.getElementById("oName").textContent="PLAYER 2 (O)";
+ newRound();
+};
+
+cells.forEach((cell,i)=>{
+ cell.onclick=()=>makeMove(i);
 });
 
-// Sound toggle
-document.getElementById("sound").addEventListener("click", function() {
-  soundOn = !soundOn;
+document.getElementById("restart").onclick=newRound;
 
-  this.textContent = soundOn
-    ? "🔊 SOUND ON"
-    : "🔇 SOUND OFF";
+document.getElementById("reset").onclick=()=>{
+ scores={X:0,O:0,draw:0};
+ updateScores();
+ newRound();
+};
 
-  if (soundOn) playSound(600);
-});
+document.getElementById("sound").onclick=function(){
+ soundOn=!soundOn;
+ this.textContent=soundOn?"🔊 SOUND ON":"🔇 SOUND OFF";
+ if(soundOn)playSound(600);
+};
 
 renderBoard();
 updateScores();
 </script>
-
 </body>
 </html>
