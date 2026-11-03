@@ -1,250 +1,411 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#061225">
-<title>AJIT TEST MASTER</title>
+<meta name="theme-color" content="#07111f">
+<title>LIVE SCORE | Cricket</title>
+
 <style>
-:root{--bg:#061225;--panel:#0d1e36;--panel2:#122946;--blue:#168bff;--cyan:#00e5ff;--text:#f1f7ff;--muted:#9eb3ca;--green:#20d69a;--red:#ff647c}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at top,#102c50,var(--bg) 55%);color:var(--text);font-family:Arial,sans-serif;min-height:100vh}
-header{padding:22px 15px;text-align:center;background:#07162b;border-bottom:1px solid #17416b}
-.logo{font-size:30px;font-weight:900;letter-spacing:1px;color:white}
-.logo span{color:var(--cyan)}
-header p{margin:8px 0 0;color:var(--muted);font-size:13px}
-main{max-width:850px;margin:auto;padding:16px}
-.card{background:linear-gradient(145deg,#102541,#0b1a30);border:1px solid #1c4266;border-radius:17px;padding:17px;margin-bottom:15px;box-shadow:0 10px 30px #0003}
-h2{font-size:19px;margin:0 0 15px}
-h3{font-size:16px;margin:0 0 10px}
-label{display:block;color:#c7d8e9;font-size:13px;margin:12px 0 6px}
-select,input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #31516e;background:#07172b;color:white;font-size:15px;outline:none}
-select:focus,input:focus,textarea:focus{border-color:var(--cyan)}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-button{border:0;border-radius:11px;padding:13px 16px;font-weight:700;font-size:14px;cursor:pointer}
-.primary{background:linear-gradient(100deg,#087bff,#00c9e9);color:white;width:100%;margin-top:16px}
-.secondary{background:#173958;color:white;border:1px solid #2b608a}
-.danger{background:#54283a;color:#ffdce4}
-button:disabled{opacity:.4;cursor:not-allowed}
-.small{font-size:12px;color:var(--muted);line-height:1.6}
-.hidden{display:none!important}
-.pills{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.pill{background:#173958;color:#bfeaff;border-radius:30px;padding:7px 11px;font-size:12px}
-.progress{height:8px;background:#203750;border-radius:20px;overflow:hidden;margin:12px 0}
-.progress div{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0}
-.question{font-size:19px;line-height:1.55;margin:18px 0}
-.option{display:block;width:100%;text-align:left;margin:9px 0;background:#102945;color:white;border:1px solid #2b4c6d;padding:14px;border-radius:12px;font-weight:500}
-.option.selected{border:2px solid var(--cyan);background:#12395a}
-.option.correct{border:2px solid var(--green);background:#103c35}
-.option.wrong{border:2px solid var(--red);background:#482432}
-.topline{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
-.timer{font-size:19px;font-weight:800;color:var(--cyan)}
-.explanation{background:#102e37;border-left:4px solid var(--green);padding:13px;border-radius:8px;margin-top:14px;line-height:1.6;font-size:14px}
-.result{text-align:center;padding:15px}
-.score{font-size:45px;font-weight:900;color:var(--cyan)}
-.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}
-.stat{background:#102945;border-radius:12px;padding:13px 5px;text-align:center}
-.stat b{display:block;font-size:22px}
-.stat span{font-size:11px;color:var(--muted)}
-.reviewitem{border-bottom:1px solid #29435e;padding:13px 0;line-height:1.6}
-.reviewitem:last-child{border:0}
-footer{text-align:center;padding:25px;color:#7892ae;font-size:12px}
-@media(max-width:520px){.grid{grid-template-columns:1fr}.logo{font-size:25px}.question{font-size:17px}.card{padding:14px}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ background:#07111f;color:#fff;
+ font-family:Arial,sans-serif;
+ min-height:100vh;
+}
+header{
+ padding:22px 16px;
+ background:linear-gradient(135deg,#082d48,#075985);
+ border-bottom:1px solid #164e63;
+}
+.header{
+ max-width:900px;margin:auto;
+ display:flex;justify-content:space-between;
+ align-items:center;gap:10px;
+}
+.logo{font-size:25px;font-weight:900;letter-spacing:1px}
+.logo span{color:#38e8b5}
+.tag{font-size:11px;color:#a5f3fc;margin-top:5px}
+.live-indicator{
+ background:#dc2626;padding:7px 12px;
+ border-radius:20px;font-size:12px;font-weight:bold;
+}
+main{max-width:900px;margin:auto;padding:18px 13px}
+.welcome{
+ padding:18px;border-radius:16px;
+ background:linear-gradient(120deg,#102b44,#102039);
+ margin-bottom:20px;
+}
+.welcome h2{font-size:21px;margin-bottom:7px}
+.welcome p{color:#9fb3c8;font-size:13px;line-height:1.5}
+.toolbar{
+ display:flex;gap:9px;margin-bottom:15px;
+}
+.search{
+ flex:1;min-width:0;padding:13px;
+ background:#14263a;border:1px solid #29445e;
+ border-radius:10px;color:white;outline:none;
+ font-size:14px;
+}
+button{
+ border:0;cursor:pointer;font-weight:bold;
+}
+.refresh{
+ padding:0 15px;border-radius:10px;
+ background:#0891b2;color:white;font-size:14px;
+}
+.filters{
+ display:flex;gap:8px;overflow-x:auto;
+ padding-bottom:13px;margin-bottom:8px;
+}
+.filter{
+ padding:9px 17px;border-radius:22px;
+ background:#172a40;color:#cbd5e1;
+ white-space:nowrap;font-size:13px;
+}
+.filter.active{background:#0891b2;color:white}
+.info{
+ color:#91a5b9;font-size:12px;
+ margin-bottom:15px;
+ display:flex;justify-content:space-between;
+ gap:8px;flex-wrap:wrap;
+}
+.match{
+ background:linear-gradient(145deg,#132940,#0d1b2d);
+ border:1px solid #24445c;
+ border-radius:15px;padding:17px;
+ margin-bottom:13px;
+}
+.match-top{
+ display:flex;justify-content:space-between;
+ gap:10px;align-items:center;margin-bottom:17px;
+}
+.tournament{font-size:12px;color:#9db3c8}
+.status{
+ font-size:11px;font-weight:bold;
+ color:#cbd5e1;background:#263c51;
+ padding:6px 9px;border-radius:15px;
+}
+.status.live{background:#7f1d1d;color:#fecaca}
+.teams{
+ display:grid;grid-template-columns:1fr 1fr;
+ gap:12px;
+}
+.team{text-align:center;min-width:0}
+.team-name{
+ font-size:15px;font-weight:bold;
+ overflow-wrap:anywhere;
+}
+.score{
+ font-size:25px;font-weight:900;
+ color:#fff;margin-top:10px;
+}
+.score small{font-size:12px;color:#9fb3c8}
+.vs{
+ text-align:center;color:#64748b;
+ font-size:12px;margin:12px 0;
+}
+.match-status{
+ border-top:1px solid #294158;
+ margin-top:17px;padding-top:12px;
+ color:#9fb3c8;font-size:12px;
+ text-align:center;line-height:1.5;
+}
+.empty{
+ text-align:center;padding:45px 15px;
+ background:#12243a;border-radius:15px;
+ color:#9fb3c8;line-height:1.8;
+}
+.loading{text-align:center;padding:35px;color:#67e8f9}
+footer{
+ text-align:center;padding:25px 12px;
+ color:#8498ad;font-size:12px;line-height:2;
+}
+footer a{color:#38bdf8}
+@media(max-width:420px){
+ .logo{font-size:21px}
+ .score{font-size:21px}
+ .team-name{font-size:13px}
+}
 </style>
 </head>
+
 <body>
+
 <header>
-  <div class="logo">AJIT <span>TEST MASTER</span></div>
-  <p>Class 6–12 | Bihar Board + CBSE | Smart MCQ Practice</p>
+ <div class="header">
+  <div>
+   <div class="logo">🏏 LIVE <span>SCORE</span></div>
+   <div class="tag">YOUR CRICKET SCORE CENTER</div>
+  </div>
+  <div class="live-indicator">● LIVE</div>
+ </div>
 </header>
 
 <main>
-<section id="setup" class="card">
-  <h2>📚 अपना टेस्ट तैयार करें</h2>
-  <div class="grid">
-    <div>
-      <label>Board</label>
-      <select id="board">
-        <option>Bihar Board</option>
-        <option>CBSE</option>
-      </select>
-    </div>
-    <div>
-      <label>कक्षा</label>
-      <select id="classNo" onchange="updateSubjects()">
-        <option value="6">Class 6</option><option value="7">Class 7</option>
-        <option value="8">Class 8</option><option value="9">Class 9</option>
-        <option value="10">Class 10</option><option value="11">Class 11</option>
-        <option value="12">Class 12</option>
-      </select>
-    </div>
-    <div id="streamBox">
-      <label>Stream (कक्षा 11–12)</label>
-      <select id="stream" onchange="updateSubjects()">
-        <option value="Science">Science</option>
-        <option value="Commerce">Commerce</option>
-        <option value="Arts">Arts</option>
-      </select>
-    </div>
-    <div>
-      <label>विषय</label>
-      <select id="subject"></select>
-    </div>
-    <div>
-      <label>भाषा / Language</label>
-      <select id="language">
-        <option value="both">Hindi + English</option>
-        <option value="hi">केवल हिंदी</option>
-        <option value="en">English only</option>
-      </select>
-    </div>
-    <div>
-      <label>Difficulty</label>
-      <select id="difficulty">
-        <option value="advanced">Advanced (Hard + Very Hard)</option>
-        <option value="all">All Levels</option>
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-        <option value="very-hard">Very Hard</option>
-      </select>
-    </div>
-    <div>
-      <label>कितने सवाल?</label>
-      <select id="count">
-        <option>10</option><option>20</option><option>25</option>
-        <option>50</option><option>100</option>
-      </select>
-    </div>
-    <div>
-      <label>प्रति सवाल समय</label>
-      <select id="seconds">
-        <option value="15">15 सेकंड</option>
-        <option value="30" selected>30 सेकंड</option>
-        <option value="45">45 सेकंड</option>
-        <option value="60">60 सेकंड</option>
-      </select>
-    </div>
-  </div>
-  <button class="primary" onclick="startTest()">🚀 START TEST</button>
-  <p class="small">ध्यान दें: टेस्ट में केवल उपलब्ध प्रश्न ही आएँगे। नए सवाल जोड़ने के लिए नीचे Question Bank Import सुविधा है।</p>
-</section>
 
-<section id="test" class="card hidden">
-  <div class="topline">
-    <span class="pill" id="testSubject">Subject</span>
-    <span class="timer" id="timer">00:30</span>
-  </div>
-  <div class="progress"><div id="progressBar"></div></div>
-  <div class="topline small">
-    <span id="questionNumber">Question 1</span>
-    <span id="answered">Answered: 0</span>
-  </div>
-  <div class="question" id="questionText"></div>
-  <div id="options"></div>
-  <div id="explanation" class="explanation hidden"></div>
-  <div class="topline" style="margin-top:18px">
-    <button class="secondary" onclick="previousQuestion()">← Previous</button>
-    <button class="secondary" onclick="nextQuestion()">Next →</button>
-  </div>
-  <button class="primary" onclick="submitTest()">SUBMIT TEST</button>
-</section>
+ <section class="welcome">
+  <h2>Cricket Live Scores 🏏</h2>
+  <p>दुनिया भर के क्रिकेट मैचों के स्कोर और मैच की स्थिति यहां देखें।</p>
+ </section>
 
-<section id="result" class="card hidden">
-  <div class="result">
-    <h2>🏆 Test Result</h2>
-    <div class="score" id="scoreText">0%</div>
-    <p id="resultMessage"></p>
-    <div class="statgrid">
-      <div class="stat"><b id="correctCount">0</b><span>Correct</span></div>
-      <div class="stat"><b id="wrongCount">0</b><span>Wrong</span></div>
-      <div class="stat"><b id="skipCount">0</b><span>Skipped</span></div>
-    </div>
-    <p class="small" id="resultDetails"></p>
-    <button class="primary" onclick="showReview()">📖 Answers & Explanations देखें</button>
-    <button class="secondary" style="width:100%;margin-top:10px" onclick="backHome()">नया टेस्ट शुरू करें</button>
-  </div>
-</section>
+ <div class="toolbar">
+  <input id="search" class="search"
+   type="search" placeholder="टीम या मैच खोजें...">
+  <button class="refresh" id="refresh">↻ Refresh</button>
+ </div>
 
-<section id="review" class="card hidden">
-  <h2>📖 Answer Review</h2>
-  <div id="reviewList"></div>
-  <button class="primary" onclick="backHome()">HOME</button>
-</section>
+ <div class="filters">
+  <button class="filter active" data-filter="all">सभी मैच</button>
+  <button class="filter" data-filter="live">🔴 LIVE</button>
+  <button class="filter" data-filter="upcoming">आने वाले</button>
+  <button class="filter" data-filter="finished">समाप्त</button>
+ </div>
 
-<section class="card">
-  <h2>➕ अपना Question Bank बढ़ाएँ</h2>
-  <p class="small">JSON फाइल से नए MCQ जोड़ें। हर सवाल में class, subject, difficulty, question, options, answer और explanation होना चाहिए।</p>
-  <input type="file" id="importFile" accept=".json,application/json">
-  <button class="primary" onclick="importQuestions()">IMPORT QUESTIONS</button>
-  <button class="secondary" style="width:100%;margin-top:10px" onclick="exportQuestions()">⬇ Export Question Bank</button>
-  <button class="secondary" style="width:100%;margin-top:10px" onclick="downloadTemplate()">⬇ Sample JSON Template</button>
-  <p class="small" id="bankStatus"></p>
-</section>
+ <div class="info">
+  <span id="matchCount">मैच लोड हो रहे हैं...</span>
+  <span id="lastUpdate">अपडेट का इंतजार...</span>
+ </div>
+
+ <div id="matches">
+  <div class="loading">🏏 मैच लोड हो रहे हैं...</div>
+ </div>
+
 </main>
-<footer>AJIT TEST MASTER • Made for Learning</footer>
+
+<footer>
+ <div>Made with ❤️ | LIVE SCORE</div>
+ <div>Cricket data provided by
+ <a href="https://sportscore.com/" target="_blank" rel="noopener">
+ SportScore
+ </a>
+ </div>
+ <div>Automatic update every 60 seconds</div>
+</footer>
 
 <script>
-// QUESTION BANK: नए प्रश्न इसी format में जोड़े जा सकते हैं।
-const starterQuestions = [
-{class:6,subject:"Mathematics",difficulty:"medium",q:{hi:"यदि 24 का 3/4 भाग ज्ञात करना हो, तो उत्तर क्या होगा?",en:"What is three-fourths of 24?"},o:{hi:["12","16","18","20"],en:["12","16","18","20"]},a:2,e:{hi:"24 × 3/4 = 18।",en:"24 × 3/4 = 18."}},
-{class:6,subject:"Science",difficulty:"medium",q:{hi:"पौधे अपना भोजन किस प्रक्रिया द्वारा बनाते हैं?",en:"By which process do plants make their food?"},o:{hi:["श्वसन","प्रकाश संश्लेषण","वाष्पीकरण","पाचन"],en:["Respiration","Photosynthesis","Evaporation","Digestion"]},a:1,e:{hi:"प्रकाश संश्लेषण में पौधे सूर्य के प्रकाश की सहायता से भोजन बनाते हैं।",en:"Plants use sunlight to make food through photosynthesis."}},
-{class:7,subject:"Mathematics",difficulty:"hard",q:{hi:"(-8) × (-7) का मान क्या है?",en:"What is the value of (-8) × (-7)?"},o:{hi:["-56","56","-15","15"],en:["-56","56","-15","15"]},a:1,e:{hi:"दो ऋणात्मक संख्याओं का गुणनफल धनात्मक होता है।",en:"The product of two negative numbers is positive."}},
-{class:7,subject:"Science",difficulty:"medium",q:{hi:"अम्ल नीले लिटमस पत्र को किस रंग में बदलता है?",en:"What colour does an acid turn blue litmus paper into?"},o:{hi:["लाल","हरा","पीला","नीला"],en:["Red","Green","Yellow","Blue"]},a:0,e:{hi:"अम्ल नीले लिटमस को लाल कर देता है।",en:"Acids turn blue litmus red."}},
-{class:8,subject:"Mathematics",difficulty:"hard",q:{hi:"यदि x + 7 = 19, तो x का मान क्या है?",en:"If x + 7 = 19, what is x?"},o:{hi:["10","11","12","13"],en:["10","11","12","13"]},a:2,e:{hi:"x = 19 - 7 = 12।",en:"x = 19 - 7 = 12."}},
-{class:8,subject:"Science",difficulty:"hard",q:{hi:"बल का SI मात्रक क्या है?",en:"What is the SI unit of force?"},o:{hi:["जूल","न्यूटन","वाट","पास्कल"],en:["Joule","Newton","Watt","Pascal"]},a:1,e:{hi:"बल का SI मात्रक न्यूटन है।",en:"The SI unit of force is Newton."}},
-{class:9,subject:"Mathematics",difficulty:"hard",q:{hi:"बहुपद x² - 5x + 6 के शून्यक कौन-से हैं?",en:"What are the zeroes of x² - 5x + 6?"},o:{hi:["1, 6","2, 3","-2, -3","-1, -6"],en:["1, 6","2, 3","-2, -3","-1, -6"]},a:1,e:{hi:"x² - 5x + 6 = (x - 2)(x - 3), इसलिए शून्यक 2 और 3 हैं।",en:"Factorising gives (x - 2)(x - 3), so the zeroes are 2 and 3."}},
-{class:9,subject:"Science",difficulty:"very-hard",q:{hi:"वेग-समय ग्राफ के नीचे का क्षेत्रफल क्या दर्शाता है?",en:"What does the area under a velocity-time graph represent?"},o:{hi:["त्वरण","विस्थापन","बल","शक्ति"],en:["Acceleration","Displacement","Force","Power"]},a:1,e:{hi:"वेग का समय के साथ समाकलन विस्थापन देता है।",en:"The area under a velocity-time graph gives displacement."}},
-{class:9,subject:"Social Science",difficulty:"hard",q:{hi:"फ्रांसीसी क्रांति किस वर्ष शुरू हुई?",en:"In which year did the French Revolution begin?"},o:{hi:["1776","1789","1815","1848"],en:["1776","1789","1815","1848"]},a:1,e:{hi:"फ्रांसीसी क्रांति 1789 में शुरू हुई।",en:"The French Revolution began in 1789."}},
-{class:10,subject:"Mathematics",difficulty:"very-hard",q:{hi:"sin²θ + cos²θ का मान क्या है?",en:"What is the value of sin²θ + cos²θ?"},o:{hi:["0","1","2","tan θ"],en:["0","1","2","tan θ"]},a:1,e:{hi:"यह त्रिकोणमिति की मूल सर्वसमिका है। इसका मान 1 होता है।",en:"This is a fundamental trigonometric identity equal to 1."}},
-{class:10,subject:"Science",difficulty:"hard",q:{hi:"विद्युत शक्ति का SI मात्रक क्या है?",en:"What is the SI unit of electric power?"},o:{hi:["वोल्ट","एम्पियर","वाट","ओम"],en:["Volt","Ampere","Watt","Ohm"]},a:2,e:{hi:"विद्युत शक्ति का SI मात्रक वाट है।",en:"The SI unit of electric power is watt."}},
-{class:10,subject:"Social Science",difficulty:"medium",q:{hi:"भारत में हरित क्रांति का मुख्य संबंध किससे है?",en:"The Green Revolution in India is mainly associated with what?"},o:{hi:["दूध उत्पादन","खाद्यान्न उत्पादन","मछली उत्पादन","वन संरक्षण"],en:["Milk production","Food grain production","Fish production","Forest conservation"]},a:1,e:{hi:"हरित क्रांति का संबंध कृषि और खाद्यान्न उत्पादन में वृद्धि से है।",en:"The Green Revolution increased agricultural and food grain production."}},
-{class:11,subject:"Physics",difficulty:"very-hard",stream:"Science",q:{hi:"यदि किसी वस्तु का वेग दोगुना हो जाए, तो समान द्रव्यमान के लिए उसकी गतिज ऊर्जा कितनी हो जाएगी?",en:"If an object's speed doubles, what happens to its kinetic energy for the same mass?"},o:{hi:["दोगुनी","तीन गुनी","चार गुनी","आधी"],en:["Doubles","Triples","Four times","Half"],},a:2,e:{hi:"गतिज ऊर्जा K = ½mv² है। वेग दोगुना करने पर ऊर्जा चार गुनी होती है।",en:"Kinetic energy is ½mv². Doubling speed makes it four times."}},
-{class:11,subject:"Chemistry",difficulty:"hard",stream:"Science",q:{hi:"एक मोल में लगभग कितने कण होते हैं?",en:"Approximately how many particles are in one mole?"},o:{hi:["6.022 × 10²³","3.0 × 10⁸","9.8","1.6 × 10⁻¹⁹"],en:["6.022 × 10²³","3.0 × 10⁸","9.8","1.6 × 10⁻¹⁹"]},a:0,e:{hi:"एक मोल में एवोगैड्रो संख्या के बराबर कण होते हैं।",en:"One mole contains Avogadro's number of particles."}},
-{class:11,subject:"Mathematics",difficulty:"very-hard",stream:"Science",q:{hi:"यदि f(x)=x², तो x के सापेक्ष f'(x) क्या होगा?",en:"If f(x)=x², what is f'(x) with respect to x?"},o:{hi:["x","2x","x³","2"],en:["x","2x","x³","2"]},a:1,e:{hi:"घात नियम के अनुसार d(xⁿ)/dx = nxⁿ⁻¹, इसलिए उत्तर 2x है।",en:"By the power rule, d(xⁿ)/dx = nxⁿ⁻¹, giving 2x."}},
-{class:11,subject:"Biology",difficulty:"hard",stream:"Science",q:{hi:"कोशिका का ऊर्जा गृह किसे कहा जाता है?",en:"Which organelle is called the powerhouse of the cell?"},o:{hi:["राइबोसोम","माइटोकॉन्ड्रिया","गॉल्जी बॉडी","न्यूक्लियस"],en:["Ribosome","Mitochondrion","Golgi body","Nucleus"]},a:1,e:{hi:"माइटोकॉन्ड्रिया ATP के निर्माण में प्रमुख भूमिका निभाता है।",en:"Mitochondria play a major role in ATP production."}},
-{class:11,subject:"Accountancy",difficulty:"hard",stream:"Commerce",q:{hi:"लेखांकन समीकरण क्या है?",en:"What is the accounting equation?"},o:{hi:["संपत्ति = पूंजी + दायित्व","लाभ = आय + खर्च","पूंजी = संपत्ति + दायित्व","आय = संपत्ति"],en:["Assets = Capital + Liabilities","Profit = Income + Expenses","Capital = Assets + Liabilities","Income = Assets"]},a:0,e:{hi:"मूल लेखांकन समीकरण: Assets = Capital + Liabilities।",en:"The basic accounting equation is Assets = Capital + Liabilities."}},
-{class:11,subject:"Economics",difficulty:"hard",stream:"Commerce",q:{hi:"अर्थशास्त्र में अवसर लागत का अर्थ क्या है?",en:"What does opportunity cost mean in economics?"},o:{hi:["कुल लागत","अगले सर्वोत्तम विकल्प का त्याग","स्थिर लागत","सीमांत लाभ"],en:["Total cost","Value of the next best alternative forgone","Fixed cost","Marginal benefit"]},a:1,e:{hi:"चुने गए विकल्प के कारण छोड़े गए अगले सर्वोत्तम विकल्प का मूल्य अवसर लागत है।",en:"Opportunity cost is the value of the next best alternative forgone."}},
-{class:11,subject:"History",difficulty:"hard",stream:"Arts",q:{hi:"सिंधु घाटी सभ्यता का प्रसिद्ध बंदरगाह कौन-सा था?",en:"Which was a famous port of the Indus Valley Civilization?"},o:{hi:["हड़प्पा","लोथल","कालीबंगा","बनावली"],en:["Harappa","Lothal","Kalibangan","Banawali"]},a:1,e:{hi:"गुजरात में स्थित लोथल अपने प्राचीन गोदी क्षेत्र के लिए प्रसिद्ध है।",en:"Lothal in Gujarat is known for its ancient dockyard."}},
-{class:11,subject:"Political Science",difficulty:"hard",stream:"Arts",q:{hi:"भारतीय संविधान सभा की प्रारूप समिति के अध्यक्ष कौन थे?",en:"Who chaired the Drafting Committee of the Indian Constituent Assembly?"},o:{hi:["जवाहरलाल नेहरू","डॉ. बी. आर. आंबेडकर","राजेंद्र प्रसाद","सरदार पटेल"],en:["Jawaharlal Nehru","Dr. B. R. Ambedkar","Rajendra Prasad","Sardar Patel"]},a:1,e:{hi:"डॉ. बी. आर. आंबेडकर प्रारूप समिति के अध्यक्ष थे।",en:"Dr. B. R. Ambedkar chaired the Drafting Committee."}},
-{class:12,subject:"Physics",difficulty:"very-hard",stream:"Science",q:{hi:"विद्युत क्षेत्र की SI इकाई क्या है?",en:"What is the SI unit of electric field?"},o:{hi:["N/C","J/C","C/N","N·m"],en:["N/C","J/C","C/N","N·m"]},a:0,e:{hi:"विद्युत क्षेत्र = बल/आवेश, इसलिए इकाई न्यूटन प्रति कूलॉम है।",en:"Electric field is force per unit charge, so its unit is N/C."}},
-{class:12,subject:"Chemistry",difficulty:"very-hard",stream:"Science",q:{hi:"प्रथम कोटि अभिक्रिया के वेग स्थिरांक की इकाई क्या है?",en:"What is the unit of the rate constant for a first-order reaction?"},o:{hi:["mol L⁻¹ s⁻¹","s⁻¹","L mol⁻¹ s⁻¹","mol² L⁻²"],en:["mol L⁻¹ s⁻¹","s⁻¹","L mol⁻¹ s⁻¹","mol² L⁻²"]},a:1,e:{hi:"प्रथम कोटि अभिक्रिया में k की इकाई समय का व्युत्क्रम होती है।",en:"For a first-order reaction, k has the unit of inverse time."}},
-{class:12,subject:"Mathematics",difficulty:"very-hard",stream:"Science",q:{hi:"d/dx(sin x) का मान क्या है?",en:"What is d/dx(sin x)?"},o:{hi:["cos x","-cos x","sin x","-sin x"],en:["cos x","-cos x","sin x","-sin x"]},a:0,e:{hi:"sin x का अवकलज cos x होता है।",en:"The derivative of sin x is cos x."}},
-{class:12,subject:"Biology",difficulty:"hard",stream:"Science",q:{hi:"DNA की द्विकुंडलित संरचना का मॉडल किसने प्रस्तुत किया?",en:"Who proposed the double-helix model of DNA?"},o:{hi:["डार्विन और लैमार्क","वॉटसन और क्रिक","मेंडल और मॉर्गन","हुक और लीउवेनहॉक"],en:["Darwin and Lamarck","Watson and Crick","Mendel and Morgan","Hooke and Leeuwenhoek"]},a:1,e:{hi:"वॉटसन और क्रिक ने 1953 में DNA का द्विकुंडलित मॉडल प्रस्तुत किया।",en:"Watson and Crick proposed the DNA double-helix model in 1953."}},
-{class:12,subject:"Accountancy",difficulty:"very-hard",stream:"Commerce",q:{hi:"साझेदारी में नए साझेदार के प्रवेश पर त्याग अनुपात किससे संबंधित है?",en:"On admission of a new partner, sacrificing ratio relates to what?"},o:{hi:["पुराने साझेदारों द्वारा लाभांश का त्याग","नए साझेदार का वेतन","कंपनी का कर","बैंक ऋण"],en:["Share of profit sacrificed by old partners","New partner's salary","Company tax","Bank loan"]},a:0,e:{hi:"पुराने साझेदार नए साझेदार को लाभ में हिस्सा देने के लिए अपने हिस्से का त्याग करते हैं।",en:"Old partners sacrifice a portion of their profit share for the new partner."}},
-{class:12,subject:"History",difficulty:"hard",stream:"Arts",q:{hi:"भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?",en:"In which year did the Quit India Movement begin?"},o:{hi:["1919","1930","1942","1947"],en:["1919","1930","1942","1947"]},a:2,e:{hi:"भारत छोड़ो आंदोलन अगस्त 1942 में शुरू हुआ।",en:"The Quit India Movement began in August 1942."}}
-];
+const API =
+ "https://sportscore.com/api/widget/matches/?sport=cricket&limit=50";
 
-let bank = [...starterQuestions];
-let quiz = [], answers = [], current = 0, timeLeft = 30, timerId = null;
-let finished = false, reviewMode = false;
-let lang = "both";
+const container = document.getElementById("matches");
+const search = document.getElementById("search");
+const count = document.getElementById("matchCount");
+const lastUpdate = document.getElementById("lastUpdate");
+const refreshBtn = document.getElementById("refresh");
 
-const subjects = {
- lower:["Mathematics","Science","Hindi","English","Social Science","Sanskrit","Computer"],
- Science:["Physics","Chemistry","Mathematics","Biology","English","Hindi","Computer Science","Agriculture"],
- Commerce:["Accountancy","Business Studies","Economics","Mathematics","English","Hindi","Entrepreneurship"],
- Arts:["History","Geography","Political Science","Economics","Sociology","Psychology","English","Hindi","Sanskrit"]
-};
+let allMatches = [];
+let currentFilter = "all";
+let loading = false;
 
-function updateSubjects(){
- const c=+document.getElementById("classNo").value;
- const stream=document.getElementById("stream").value;
- document.getElementById("streamBox").classList.toggle("hidden",c<11);
- const list=c<11?subjects.lower:subjects[stream];
- document.getElementById("subject").innerHTML =
- '<option value="all">सभी विषय / All Subjects</option>'+
- list.map(s=>`<option value="${s}">${s}</option>`).join("");
+function safe(value){
+ return String(value ?? "").replace(/[&<>"']/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",
+  '"':"&quot;","'":"&#39;"
+ }[c]));
 }
-updateSubjects();
 
-function getText(obj){
- if(typeof obj==="string") return obj;
- if(lang==="hi") return obj.hi||obj.en||"";
- if(lang==="en") return obj.en||obj.hi||"";
- return (obj.hi||"")+" / "+(obj.en||"");
+function getText(value){
+ if(value === null || value === undefined) return "";
+ if(typeof value === "object"){
+  if(Array.isArray(value)){
+   return value.map(getText).filter(Boolean).join(" | ");
+  }
+  return [
+   value.runs !== undefined ? value.runs : "",
+   value.wickets !== undefined ? "/"+value.wickets : "",
+   value.overs !== undefined ? " ("+value.overs+" ov)" : ""
+  ].join("") || "";
+ }
+ return String(value);
 }
-function shuffle(arr){
- return [...arr].sort(()=>Math.random()-.5);
+
+function getStatus(match){
+ return (
+  String(match.status || "") + " " +
+  String(match.status_text || "")
+ ).toLowerCase();
 }
-func
+
+function category(match){
+ const s = getStatus(match);
+
+ if(/live|in.play|in_progress|innings|stumps/.test(s))
+  return "live";
+
+ if(/finish|complete|result|abandon|cancel/.test(s))
+  return "finished";
+
+ if(/upcoming|scheduled|not.started|preview/.test(s))
+  return "upcoming";
+
+ return "other";
+}
+
+function makeScore(match, side){
+ const score = match[side+"_score"];
+ if(score !== undefined && score !== null && score !== "")
+  return getText(score);
+
+ const innings = match.innings;
+ if(Array.isArray(innings)){
+  const team = match[side];
+  const found = innings.filter(i =>
+   String(i.team || i.team_name || "").toLowerCase() ===
+   String(team || "").toLowerCase()
+  );
+  if(found.length){
+   return found.map(i => getText(i.score || i)).join(" | ");
+  }
+ }
+ return "—";
+}
+
+function render(){
+ const query = search.value.toLowerCase().trim();
+
+ const filtered = allMatches.filter(m => {
+  const name = (
+   String(m.home || "") + " " +
+   String(m.away || "") + " " +
+   String(m.status_text || "")
+  ).toLowerCase();
+
+  const matchFilter =
+   currentFilter === "all" ||
+   category(m) === currentFilter;
+
+  return matchFilter && name.includes(query);
+ });
+
+ count.textContent = filtered.length + " मैच";
+
+ if(!filtered.length){
+  container.innerHTML = `
+   <div class="empty">
+    <div style="font-size:35px">🏏</div>
+    <h3>कोई मैच नहीं मिला</h3>
+    <p>अभी इस कैटेगरी में मैच उपलब्ध नहीं है।</p>
+   </div>`;
+  return;
+ }
+
+ container.innerHTML = filtered.map(m => {
+  const status = category(m);
+  const label = status === "live" ? "● LIVE" :
+   status === "finished" ? "FINISHED" :
+   status === "upcoming" ? "UPCOMING" :
+   safe(m.status_text || m.status || "MATCH");
+
+  return `
+   <article class="match">
+    <div class="match-top">
+     <div class="tournament">
+      🏆 ${safe(m.competition || "Cricket Match")}
+     </div>
+     <span class="status ${status === "live" ? "live" : ""}">
+      ${label}
+     </span>
+    </div>
+
+    <div class="teams">
+     <div class="team">
+      <div class="team-name">${safe(m.home || "Team 1")}</div>
+      <div class="score">
+       ${safe(makeScore(m,"home"))}
+      </div>
+     </div>
+
+     <div class="team">
+      <div class="team-name">${safe(m.away || "Team 2")}</div>
+      <div class="score">
+       ${safe(makeScore(m,"away"))}
+      </div>
+     </div>
+    </div>
+
+    <div class="vs">VS</div>
+
+    <div class="match-status">
+     ${safe(m.status_text || m.status || "Match details")}
+    </div>
+   </article>
+  `;
+ }).join("");
+}
+
+async function loadMatches(){
+ if(loading) return;
+ loading = true;
+
+ refreshBtn.textContent = "Loading...";
+
+ if(!allMatches.length){
+  container.innerHTML =
+   '<div class="loading">🏏 लाइव स्कोर लोड हो रहा है...</div>';
+ }
+
+ try{
+  const response = await fetch(API,{
+   method:"GET",
+   cache:"no-store"
+  });
+
+  if(!response.ok){
+   throw new Error("API error: "+response.status);
+  }
+
+  const data = await response.json();
+
+  if(!Array.isArray(data.matches)){
+   throw new Error("Invalid API response");
+  }
+
+  allMatches = data.matches;
+
+  render();
+
+  lastUpdate.textContent =
+   "Updated: " + new Date().toLocaleTimeString("en-IN");
+
+ }catch(error){
+  console.error(error);
+
+  if(!allMatches.length){
+   container.innerHTML = `
+    <div class="empty">
+     <div style="font-size:35px">⚠️</div>
+     <h3>स्कोर लोड नहीं हो पाया</h3>
+     <p>इंटरनेट या API में समस्या हो सकती है।</p>
+     <p>कृपया Refresh दबाएं।</p>
+    </div>`;
+  }else{
+   lastUpdate.textContent = "अपडेट असफल, पुराना डेटा दिखाया जा रहा है";
+  }
+
+ }finally{
+  loading = false;
+  refreshBtn.textContent = "↻ Refresh";
+ }
+}
+
+document.querySelectorAll(".filter").forEach(btn => {
+ btn.addEventListener("click",()=>{
+  document.querySelectorAll(".filter").forEach(b=>
+   b.classList.remove("active")
+  );
+  btn.classList.add("active");
+  currentFilter = btn.dataset.filter;
+  render();
+ });
+});
+
+search.addEventListener("input",render);
+refreshBtn.addEventListener("click",loadMatches);
+
+loadMatches();
+setInterval(loadMatches,60000);
+</script>
+
+</body>
+</html>
