@@ -1,55 +1,1231 @@
-!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AJIT TYPING EXPERT — Type Faster. Think Smarter.</title>
-    <meta
-      name="description"
-      content="Type Faster. Think Smarter. Bilingual English and Hindi (InScript & Remington) typing learning platform, speed games, analytics, and installable offline PWA."
-    />
-    <meta property="og:title" content="AJIT TYPING EXPERT — Type Faster. Think Smarter." />
-    <meta
-      property="og:description"
-      content="Master English and Hindi typing with 100+ lessons, live keyboard visualization, speed race games, analytics, and offline PWA support."
-    />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#1D4ED8" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="AT Expert" />
-    <link rel="manifest" href="./app-manifest.json" />
-    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
-    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <script>
-      (function () {
-        try {
-          var saved = localStorage.getItem('ate_theme');
-          if (saved === 'dark') {
-            document.documentElement.classList.add('dark');
-          }
-        } catch (e) {}
-      })();
-    </script>
-  </head>
-  <body class="bg-slate-50 text-slate-900 dark:bg-[#070E1A] dark:text-slate-100 antialiased selection:bg-blue-600 selection:text-white">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(function () {});
-        });
-      }
-    </script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0759d8">
+<meta name="description" content="AJIT TYPING EXPERT - Master Hindi and English typing with lessons, games and analytics.">
+
+<title>AJIT TYPING EXPERT | Type Faster. Think Smarter.</title>
+
+<link rel="manifest" href="./app-manifest.json">
+<link rel="icon" href="./icon-192.png">
+
+<style>
+:root {
+  --blue: #0759d8;
+  --cyan: #13caff;
+  --navy: #071936;
+  --bg: #f4f7fc;
+  --card: #ffffff;
+  --text: #14223b;
+  --muted: #65748c;
+  --border: #e1e9f5;
+  --shadow: 0 12px 35px rgba(20,65,130,.09);
+}
+
+body.dark {
+  --bg: #071326;
+  --card: #101f36;
+  --text: #edf5ff;
+  --muted: #a8b8d0;
+  --border: #263b58;
+  --shadow: 0 12px 35px rgba(0,0,0,.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: .3s;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1180px;
+  margin: auto;
+  padding: 0 22px;
+}
+
+/* NAVBAR */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  max-width: 1180px;
+  margin: auto;
+  padding: 13px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 900;
+  font-size: 19px;
+  color: var(--blue);
+}
+
+.brand img {
+  width: 43px;
+  height: 43px;
+  border-radius: 12px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  transition: .2s;
+}
+
+.nav-links a:hover {
+  color: var(--blue);
+}
+
+.nav-actions {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+
+.theme-btn,
+.menu-btn {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 13px;
+  font-size: 17px;
+}
+
+.menu-btn {
+  display: none;
+}
+
+/* BUTTONS */
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 21px;
+  border-radius: 11px;
+  border: 0;
+  background: linear-gradient(120deg, #087cff, #0759d8);
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+  box-shadow: 0 7px 22px #087cff35;
+  transition: .25s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px #087cff55;
+}
+
+.btn-outline {
+  border: 1px solid #8ab5fa;
+  color: var(--blue);
+  background: transparent;
+  box-shadow: none;
+}
+
+body.dark .btn-outline {
+  color: #8fc3ff;
+}
+
+.btn-white {
+  background: white;
+  color: #0759d8;
+}
+
+/* HERO */
+
+.hero {
+  background:
+    radial-gradient(circle at 80% 20%, #087cff55, transparent 30%),
+    linear-gradient(125deg, #06132d, #083c85 65%, #0768d5);
+  color: white;
+  overflow: hidden;
+}
+
+.hero-inner {
+  max-width: 1180px;
+  margin: auto;
+  padding: 95px 22px 100px;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  align-items: center;
+  gap: 45px;
+}
+
+.hero-tag {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid #71c8ff88;
+  border-radius: 30px;
+  color: #aeeaff;
+  background: #ffffff12;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 6vw, 70px);
+  line-height: 1.06;
+  letter-spacing: -2px;
+  margin: 22px 0;
+}
+
+.hero h1 span {
+  color: #16d8ff;
+}
+
+.hero p {
+  color: #d4e7ff;
+  font-size: 17px;
+  max-width: 570px;
+  margin-bottom: 28px;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+
+.hero-visual {
+  background: linear-gradient(145deg, #ffffff, #dcecff);
+  border-radius: 25px;
+  padding: 24px;
+  box-shadow: 0 25px 70px #0005;
+  text-align: center;
+  color: #12376d;
+  animation: float 4s ease-in-out infinite;
+}
+
+.hero-visual img {
+  width: 155px;
+  height: 155px;
+  object-fit: contain;
+  border-radius: 25px;
+}
+
+.hero-visual h2 {
+  margin-top: 15px;
+  font-size: 23px;
+}
+
+.hero-visual p {
+  color: #45628a;
+  font-size: 13px;
+  margin: 5px 0 0;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* STATS */
+
+.stats {
+  max-width: 1100px;
+  margin: -35px auto 0;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 14px;
+  padding: 0 20px;
+}
+
+.stat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 23px 12px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.stat h2 {
+  color: var(--blue);
+  font-size: 29px;
+}
+
+.stat p {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* SECTIONS */
+
+section.content-section {
+  padding: 80px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 38px;
+}
+
+.section-title small {
+  color: var(--blue);
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.section-title h2 {
+  font-size: 36px;
+  margin: 8px 0;
+}
+
+.section-title p {
+  color: var(--muted);
+  max-width: 650px;
+  margin: auto;
+}
+
+/* FEATURES */
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 19px;
+}
+
+.feature-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 25px;
+  transition: .3s;
+  box-shadow: var(--shadow);
+}
+
+.feature-card:hover {
+  transform: translateY(-7px);
+  border-color: #78b6ff;
+}
+
+.feature-icon {
+  width: 53px;
+  height: 53px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #e9f3ff;
+  font-size: 27px;
+  margin-bottom: 16px;
+}
+
+body.dark .feature-icon {
+  background: #1b365b;
+}
+
+.feature-card h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.feature-card p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ABOUT */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+  align-items: center;
+}
+
+.about-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.about-box h3 {
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+.about-box p {
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.check-list {
+  list-style: none;
+}
+
+.check-list li {
+  padding: 8px 0;
+  font-weight: 700;
+}
+
+.check-list li::before {
+  content: "✓";
+  color: #0bba79;
+  font-weight: 900;
+  margin-right: 10px;
+}
+
+/* PRACTICE CATEGORIES */
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 20px;
+}
+
+.category-card {
+  border-radius: 20px;
+  padding: 35px;
+  color: white;
+  background: linear-gradient(125deg,#0759d8,#0a9ee8);
+  box-shadow: var(--shadow);
+}
+
+.category-card:nth-child(2) {
+  background: linear-gradient(125deg,#152d64,#0875d9);
+}
+
+.category-card h3 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.category-card p {
+  color: #e1f1ff;
+  margin-bottom: 22px;
+}
+
+/* PWA */
+
+.pwa-box {
+  background: linear-gradient(120deg,#06152e,#0759d8);
+  color: white;
+  padding: 50px 35px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  box-shadow: 0 20px 50px #0759d830;
+}
+
+.pwa-box h2 {
+  font-size: 31px;
+  margin-bottom: 10px;
+}
+
+.pwa-box p {
+  color: #d5e8ff;
+  max-width: 650px;
+}
+
+/* FAQ */
+
+.faq-list {
+  max-width: 850px;
+  margin: auto;
+}
+
+.faq-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.faq-question {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  padding: 19px;
+  font-weight: 800;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.faq-answer {
+  display: none;
+  padding: 0 19px 19px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+/* CONTACT */
+
+.contact-box {
+  max-width: 700px;
+  margin: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.contact-box p {
+  color: var(--muted);
+  margin: 10px 0 20px;
+}
+
+/* FOOTER */
+
+footer {
+  background: #06142b;
+  color: white;
+  padding: 45px 20px 20px;
+  margin-top: 40px;
+}
+
+.footer-inner {
+  max-width: 1180px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 30px;
+}
+
+footer h3 {
+  margin-bottom: 12px;
+}
+
+footer p, footer a {
+  color: #b8cbe4;
+  font-size: 14px;
+}
+
+footer a {
+  display: block;
+  margin: 7px 0;
+}
+
+.copyright {
+  border-top: 1px solid #ffffff20;
+  text-align: center;
+  margin-top: 35px;
+  padding-top: 18px;
+  color: #a8bad3;
+  font-size: 13px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    width: 100%;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    padding-top: 65px;
+  }
+
+  .hero-visual {
+    max-width: 500px;
+    margin: auto;
+    width: 100%;
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media(max-width:600px) {
+  .brand {
+    font-size: 14px;
+  }
+
+  .brand img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .hero-inner {
+    padding-top: 55px;
+  }
+
+  .hero h1 {
+    font-size: 43px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .feature-grid,
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title h2 {
+    font-size: 28px;
+  }
+
+  .pwa-box {
+    display: block;
+    padding: 30px 23px;
+  }
+
+  .pwa-box h2 {
+    font-size: 25px;
+  }
+
+  .pwa-box .btn {
+    margin-top: 20px;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<header class="navbar">
+  <div class="nav-inner">
+
+    <a class="brand" href="#home">
+      <img src="./icon-192.png" alt="AJIT TYPING EXPERT Logo">
+      AJIT TYPING EXPERT
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#english">English</a>
+      <a href="#hindi">Hindi</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+      <a class="btn" href="./app.html">Open App ↗</a>
+    </div>
+
+  </div>
+</header>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+  <div class="hero-inner">
+
+    <div>
+      <span class="hero-tag">⚡ ADVANCED TYPING LEARNING PLATFORM</span>
+
+      <h1>
+        Type Faster.<br>
+        <span>Think Smarter.</span>
+      </h1>
+
+      <p>
+        Improve your typing speed, accuracy and confidence.
+        Learn Hindi and English typing with professional lessons,
+        exciting typing games and performance analytics.
+      </p>
+
+      <div class="hero-buttons">
+        <a class="btn" href="./app.html">🚀 Start Typing</a>
+        <a class="btn btn-outline" href="#features">Explore Features ↓</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <img src="./icon-512.png" alt="AJIT TYPING EXPERT Logo">
+      <h2>AJIT TYPING EXPERT</h2>
+      <p>Learn • Practise • Improve • Achieve</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- STATS -->
+
+<div class="stats">
+  <div class="stat">
+    <h2>100+</h2>
+    <p>Typing Lessons</p>
+  </div>
+
+  <div class="stat">
+    <h2>2</h2>
+    <p>Languages</p>
+  </div>
+
+  <div class="stat">
+    <h2>24/7</h2>
+    <p>Practice Access</p>
+  </div>
+
+  <div class="stat">
+    <h2>FREE</h2>
+    <p>To Get Started</p>
+  </div>
+</div>
+
+<!-- ABOUT -->
+
+<section class="content-section" id="about">
+  <div class="container">
+
+    <div class="section-title">
+      <small>ABOUT US</small>
+      <h2>Welcome to AJIT TYPING EXPERT</h2>
+      <p>A modern platform designed to help learners improve typing skills step by step.</p>
+    </div>
+
+    <div class="about-grid">
+
+      <div class="about-box">
+        <h3>Make Every Keystroke Count</h3>
+
+        <p>
+          AJIT TYPING EXPERT is designed for students,
+          beginners and anyone who wants to improve their
+          typing performance.
+        </p>
+
+        <p>
+          Practise at your own pace, monitor your progress
+          and challenge yourself with typing games.
+        </p>
+
+        <a href="./app.html" class="btn">Start Learning →</a>
+      </div>
+
+      <div class="about-box">
+        <h3>Why Choose Us?</h3>
+
+        <ul class="check-list">
+          <li>Hindi and English practice</li>
+          <li>Beginner to advanced lessons</li>
+          <li>Live typing performance</li>
+          <li>Personal progress tracking</li>
+          <li>Practice games and challenges</li>
+          <li>Offline-ready PWA experience</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+
+<section class="content-section" id="features">
+  <div class="container">
+
+    <div class="section-title">
+      <small>POWERFUL FEATURES</small>
+      <h2>Everything You Need</h2>
+      <p>Powerful tools to make your typing journey better.</p>
+    </div>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon">⌨️</div>
+        <h3>Live Keyboard Visualization</h3>
+        <p>Follow your typing with an interactive keyboard display.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <h3>100+ Typing Lessons</h3>
+        <p>Structured practice from beginner to advanced levels.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🏁</div>
+        <h3>Typing Race</h3>
+        <p>Challenge yourself with exciting typing competitions.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>Advanced Analytics</h3>
+        <p>Track your WPM, accuracy, errors and improvement.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Daily Challenge</h3>
+        <p>Complete daily typing goals and improve regularly.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">✍️</div>
+        <h3>Custom Text Practice</h3>
+        <p>Practise using your own paragraphs and content.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🏆</div>
+        <h3>Certificate System</h3>
+        <p>Generate printable personal practice certificates.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🥇</div>
+        <h3>Offline Leaderboard</h3>
+        <p>Compare your personal typing records.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎙️</div>
+        <h3>Voice Typing</h3>
+        <p>Use supported browser speech recognition for practice.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💾</div>
+        <h3>Backup & Restore</h3>
+        <p>Export and restore your saved practice progress.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🇮🇳</div>
+        <h3>Hindi Keyboard Guides</h3>
+        <p>Learn about InScript and Remington keyboard layouts.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌙</div>
+        <h3>Dark & White Mode</h3>
+        <p>Choose the interface appearance you prefer.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ENGLISH -->
+
+<section class="content-section" id="english">
+  <div class="container">
+
+    <div class="category-grid">
+
+      <div class="category-card">
+        <h3>🇬🇧 English Typing</h3>
+        <p>
+          Improve English typing speed and accuracy
+          through guided lessons and daily exercises.
+        </p>
+        <a href="./app.html" class="btn btn-white">Start English Practice →</a>
+      </div>
+
+      <div class="category-card" id="hindi">
+        <h3>🇮🇳 Hindi Typing</h3>
+        <p>
+          Learn Hindi typing with InScript and
+          Remington keyboard layout guides.
+        </p>
+        <a href="./app.html" class="btn btn-white">Start Hindi Practice →</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- GAMES -->
+
+<section class="content-section">
+  <div class="container">
+
+    <div class="section-title">
+      <small>LEARN THROUGH FUN</small>
+      <h2>Typing Games & Challenges</h2>
+      <p>Make your typing practice more interesting.</p>
+    </div>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon">🏎️</div>
+        <h3>Typing Race</h3>
+        <p>Test your typing speed in a timed challenge.</p>
+        <a href="./app.html" class="btn" style="margin-top:17px">Play Now</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔥</div>
+        <h3>Daily Challenge</h3>
+        <p>Set a daily target and build a consistent habit.</p>
+        <a href="./app.html" class="btn" style="margin-top:17px">Try Challenge</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Performance Analytics</h3>
+        <p>Review your practice history and progress.</p>
+        <a href="./app.html" class="btn" style="margin-top:17px">View Progress</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- PWA -->
+
+<section class="content-section" id="install">
+  <div class="container">
+
+    <div class="pwa-box">
+
+      <div>
+        <h2>Take Your Typing Practice Anywhere</h2>
+
+        <p>
+          Install AJIT TYPING EXPERT as an app on supported
+          browsers. Enjoy an app-like experience and access
+          cached content when offline.
+        </p>
+      </div>
+
+      <button class="btn btn-white" id="installBtn">
+        ⬇ Install PWA
+      </button>
+
+    </div>
+
+    <p id="installMessage" style="text-align:center;color:var(--muted);margin-top:15px;font-size:13px">
+      PWA installation is available on supported browsers over HTTPS.
+    </p>
+
+  </div>
+</section>
+
+<!-- FAQ -->
+
+<section class="content-section" id="faq">
+  <div class="container">
+
+    <div class="section-title">
+      <small>HELP CENTER</small>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Is AJIT TYPING EXPERT free?
+          <span>＋</span>
+        </button>
+        <div class="faq-answer">
+          The platform is designed to work without paid APIs or mandatory subscriptions.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Can I practise Hindi typing?
+          <span>＋</span>
+        </button>
+        <div class="faq-answer">
+          Yes. The platform includes Hindi typing practice and guides for InScript and Remington layouts. Configure the required input method in Windows.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Can I install this as an app?
+          <span>＋</span>
+        </button>
+        <div class="faq-answer">
+          Yes, on supported browsers using the PWA installation option.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Does it work offline?
+          <span>＋</span>
+        </button>
+        <div class="faq-answer">
+          Cached pages and app resources can work offline after they have loaded successfully once, provided the Service Worker is configured correctly.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Is the certificate officially recognised?
+          <span>＋</span>
+        </button>
+        <div class="faq-answer">
+          No. It is a personal typing practice achievement certificate, not an officially accredited qualification.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+
+<section class="content-section" id="contact">
+  <div class="container">
+
+    <div class="section-title">
+      <small>CONTACT</small>
+      <h2>Start Your Typing Journey</h2>
+      <p>Ready to improve your typing skills?</p>
+    </div>
+
+    <div class="contact-box">
+      <h3>AJIT TYPING EXPERT</h3>
+      <p>Type Faster. Think Smarter.</p>
+      <a href="./app.html" class="btn">Open Typing App →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-inner">
+
+    <div>
+      <h3>⌨️ AJIT TYPING EXPERT</h3>
+      <p>
+        A modern Hindi and English typing learning platform.
+        Learn, practise and improve your typing skills.
+      </p>
+    </div>
+
+    <div>
+      <h3>Quick Links</h3>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <div>
+      <h3>Typing Practice</h3>
+      <a href="./app.html">Open Typing App</a>
+      <a href="#english">English Typing</a>
+      <a href="#hindi">Hindi Typing</a>
+      <a href="#install">Install PWA</a>
+    </div>
+
+  </div>
+
+  <div class="copyright">
+    © 2026 AJIT TYPING EXPERT. All Rights Reserved.
+  </div>
+</footer>
+
+<script>
+// MOBILE MENU
+
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+
+menuBtn.addEventListener("click", () => {
+  navLinks.classList.toggle("show");
+});
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("show");
+  });
+});
+
+// DARK MODE
+
+const themeBtn = document.getElementById("themeBtn");
+
+if (localStorage.getItem("ajit-theme") === "dark") {
+  document.body.classList.add("dark");
+  themeBtn.textContent = "☀️";
+}
+
+themeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  const isDark = document.body.classList.contains("dark");
+
+  themeBtn.textContent = isDark ? "☀️" : "🌙";
+
+  localStorage.setItem(
+    "ajit-theme",
+    isDark ? "dark" : "light"
+  );
+});
+
+// FAQ ACCORDION
+
+document.querySelectorAll(".faq-question").forEach(button => {
+  button.addEventListener("click", () => {
+    const item = button.parentElement;
+    item.classList.toggle("active");
+
+    const icon = button.querySelector("span");
+    icon.textContent = item.classList.contains("active") ? "−" : "＋";
+  });
+});
+
+// PWA INSTALLATION
+
+let deferredPrompt = null;
+
+const installBtn = document.getElementById("installBtn");
+const installMessage = document.getElementById("installMessage");
+
+window.addEventListener("beforeinstallprompt", event => {
+  event.preventDefault();
+  deferredPrompt = event;
+  installBtn.textContent = "⬇ Install PWA";
+  installMessage.textContent = "Your browser supports PWA installation.";
+});
+
+installBtn.addEventListener("click", async () => {
+
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+
+    const result = await deferredPrompt.userChoice;
+
+    if (result.outcome === "accepted") {
+      installMessage.textContent = "Installation accepted by browser.";
+    } else {
+      installMessage.textContent = "Installation was cancelled.";
+    }
+
+    deferredPrompt = null;
+    return;
+  }
+
+  if (window.matchMedia("(display-mode: standalone)").matches) {
+    installMessage.textContent = "AJIT TYPING EXPERT is already installed.";
+    return;
+  }
+
+  installMessage.textContent =
+    "Open the browser menu and select Install App or Add to Home Screen. Make sure the PWA manifest and Service Worker are configured.";
+});
+
+// PWA SERVICE WORKER
+
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => {
+        console.log("AJIT TYPING EXPERT Service Worker registered.");
+      })
+      .catch(error => {
+        console.error("Service Worker registration failed:", error);
+      });
+  });
+}
+
+// PWA INSTALLED EVENT
+
+window.addEventListener("appinstalled", () => {
+  installMessage.textContent = "AJIT TYPING EXPERT installed successfully!";
+  installBtn.textContent = "✓ Installed";
+});
+</script>
+
+</body>
 </html>
 
